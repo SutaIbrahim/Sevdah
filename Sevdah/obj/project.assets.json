@@ -13308,11 +13308,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
+      "projectUniqueName": "C:\\Users\\Ibrahim\\Source\\Repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
       "projectName": "Sevdah",
-      "projectPath": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
+      "projectPath": "C:\\Users\\Ibrahim\\Source\\Repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
       "packagesPath": "C:\\Users\\Ibrahim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\obj\\",
+      "outputPath": "C:\\Users\\Ibrahim\\Source\\Repos\\Sevdah\\App\\Sevdah\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
