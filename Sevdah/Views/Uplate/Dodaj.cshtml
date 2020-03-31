@@ -7,10 +7,7 @@
 <section id="main-content">
     <section class="wrapper">
         <section class="panel">
-
             <div class="panel-body">
-
-
                 <header class="panel-heading">
                     <h2><b>Dodavanje uplate za kupca:</b> @Model.NazivKupca</h2>
                 </header>
@@ -21,13 +18,10 @@
                     <input asp-for="Dodaj" hidden />
                     <input asp-for="KupacID" hidden />
 
-
                     @if (!ViewData.ModelState.IsValid)
                     {
                         <div asp-validation-summary="All" class="alert alert-danger"></div>
                     }
-
-
 
                     <div class="row">
                         <div class="col-md-4">
@@ -36,7 +30,6 @@
                                 <input asp-for="Datum" class="form-control" />
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="BrojIzvoda ">Broj izvoda: </label>
@@ -65,7 +58,6 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </section>
@@ -95,7 +87,6 @@
     dodaj.onclick = function () {
         modal.style.display = "block";
         window.location.href = $(this).attr("href");
-
     }
 
     // When the user clicks on <span> (x), close the modal
