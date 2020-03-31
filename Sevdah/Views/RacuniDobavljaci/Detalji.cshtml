@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "Detalji";
+    int brojac = 0;
+}
+@model RacunDobavljacaDetaljiVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Detalji o računu</b></h2>
+                <hr />
+
+
+            </header>
+            <br />
+            <br />
+            <div style="margin-left:5px;">
+                <h4><b>Broj računa:</b> @Model.racun.BrojRacuna</h4>
+                <h4><b>Datum izdavanja: </b>@Model.racun.Datum.ToShortDateString()</h4>
+                <h4><b>Dobavljač:</b> @Model.racun.Dobavljac.Naziv</h4>
+                <h4><b>Ukupno za naplatu: </b>@Model.racun.UkupnoSaPDV</h4>
+                <h4><b>Dosad plaćeno:</b> @Model.racun.DosadPlaceno</h4>
+                <h4>
+                    <b>
+                        Plaćeno:
+                    </b>
+                    @if (Model.racun.Placeno == true)
+    {
+                <a style="color:green;"><b>DA</b></a>
+
+}
+else
+{
+                <a style="color:red;"><b>NE</b></a>
+
+}
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="pull-right">
+                    @if (Model.racun.DosadPlaceno == 0 || Model.racun.RacunDobavljacaID == Model.zadnjiID)
+                    {
+                        <a class="btn btn-primary" asp-action="DodajStavku" asp-route-RacunId="@Model.racun.RacunDobavljacaID" style="background-color:lawngreen;border-style:none;"><i class="fa fa-plus"></i> Dodaj stavku</a>
+                    }
+                   
+                    <a class="btn btn-primary" href="/RacuniDobavljaci/Index" style="background-color:orangered;border-style:none;"><i class="fa fa-close"></i> Nazad</a>
+
+                </div>
+                <br />
+                <br />
+                <br />
+                <h3><b>Stavke računa:</b> </h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>R.br</th>
+                            <th>Proizvod</th>
+                            <th>Količina</th>
+                            <th>Iznos bez PDV</th>
+                            <th>Iznos sa PDV</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.stavke)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.VrstaProizvoda.Naziv</td>
+                                <td>@x.KolicinaUkomadima</td>
+                                <td>@x.IznosBezPDV</td>
+                                <td>@x.IznosSaPDV</td>
+                                @if (Model.racun.DosadPlaceno == 0)
+                                {
+                                    <td class="text-center">
+                                        <a asp-action="ObrisiStavku" asp-route-StavkaId="@x.RacunProizvodDobavljacaID" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite izbrisati stavku računa?');">Obriši</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+    $("#sacuvaj").click(function () {
+        alertify.set('notifier', 'position', 'top-left');
+        alertify.success('Sacuvano!');
+
+    })
+</script>

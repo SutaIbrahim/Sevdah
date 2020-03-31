@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+    DateTime datum = DateTime.Now;
+}
+@model List<Skladiste>
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Skladište</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+
+                    @if (datum.Month == 12 && (datum.Day == 31 || datum.Day == 30))
+                    {
+                        <a class="btn btn-default" target="_blank" href="/Skladiste/PrikaziPdf/" style="border:groove;border-color:red;"><i class="fa fa-file-o"></i> Printaj stanje skladišta</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default" target="_blank" href="/Skladiste/PrikaziPdf/"><i class="fa fa-file-o"></i> Printaj stanje skladišta</a>
+                    }
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Vrsta kafe</th>
+                            <th>Količina na stanju</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.VrstaKafe</td>
+                                @if (x.KolicinaUKg < 20)
+                                {
+                                    <td style="color:red;"><b>@Math.Round(x.KolicinaUKg,2) kg </b></td>
+                                }
+                                else
+                                {
+                                    <td>@Math.Round(x.KolicinaUKg,2) kg</td>
+                                }
+                                <td class="text-left">
+                                    <a id="dodajNaSkladiste" asp-action="Uredi" asp-route-skladisteID="@x.SkladisteID" class="btn btn-warning" style="width:98%;"><i class="fa fa-edit"></i> Dodaj na skladište</a>&nbsp
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var dodajNaSkladiste = document.getElementById("dodajNaSkladiste");
+
+
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    dodajNaSkladiste.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>
+

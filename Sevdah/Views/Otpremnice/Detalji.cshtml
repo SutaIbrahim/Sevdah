@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "Detalji";
+    int brojac = 0;
+    DateTime datum = DateTime.Now;
+}
+@model OtpremnicaDetaljiVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                @if (Model.otpremnica.Revers == true)
+                {
+                    <h2><b>Detalji o reversu</b></h2>
+                }
+                else
+                {
+                    <h2><b>Detalji o otpremnici</b></h2>
+                }
+                <hr />
+
+            </header>
+            <br />
+            <br />
+            <div style="margin-left:5px;">
+                <h4><b>Datum izdavanja: </b>@Model.otpremnica.Datum.ToShortDateString()</h4>
+                <h4><b>Subjekt:</b> @Model.otpremnica.Kupac.NazivKupca</h4>
+            </div>
+            <div class="panel-body">
+                <div class="pull-right">
+                    @if (Model.otpremnica.Datum.Month == datum.Month || Model.otpremnica.Datum.Month == (datum.Month - 1))
+                    {
+                        <a class="btn btn-primary" asp-action="DodajStavku" asp-route-OtpremnicaId="@Model.otpremnica.OtpremnicaID" style="background-color:lawngreen;border-style:none;"><i class="fa fa-plus"></i> Dodaj stavku</a>
+                    }
+                    @if (Model.otpremnica.Revers == false)
+                    {
+                        <a class="btn btn-default" asp-action="PrintajOtpremnicu" asp-route-OtpremnicaId="@Model.otpremnica.OtpremnicaID" asp-route-KupacId="@Model.otpremnica.KupacID" target="_blank"><i class="fa fa-file-o"></i> Printaj otpremnicu</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default" asp-action="PrintajOtpremnicu" asp-route-OtpremnicaId="@Model.otpremnica.OtpremnicaID" asp-route-KupacId="@Model.otpremnica.KupacID" target="_blank"><i class="fa fa-file-o"></i> Printaj revers</a>
+                    }
+                    <a class="btn btn-primary" href="/Otpremnice/Index" style="background-color:orangered;border-style:none;"><i class="fa fa-close"></i> Nazad</a>
+
+                </div>
+                <br />
+                <br />
+                <br />
+                @if (Model.otpremnica.Revers == true)
+                {
+                    <h3><b>Stavke reversa:</b> </h3>
+                }
+                else
+                {
+                    <h3><b>Stavke otpremnice:</b> </h3>
+                }
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>R.br</th>
+                            <th>Proizvod</th>
+                            <th>Količina <b>(KG)</b></th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.stavke)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.Proizvod.Naziv</td>
+                                <td>@x.KolicinaKG</td>
+                                @if (Model.otpremnica.Datum.Month == datum.Month || Model.otpremnica.Datum.Month == (datum.Month - 1))
+                                {
+                                    <td class="text-center">
+                                        <a asp-action="ObrisiStavku" asp-route-StavkaId="@x.OtpremnicaProizvodID" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite izbrisati stavku otpremnice/reversa?');">Obriši</a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+    $("#sacuvaj").click(function () {
+        alertify.set('notifier', 'position', 'top-left');
+        alertify.success('Sačuvano!');
+
+    })
+</script>

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+}
+@model List<VrstaProizvoda>
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Vrste proizvoda od dobavljača pohranjenje u bazu</b></h2>
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+                </div>
+
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/VrsteProizvoda/Dodaj"><i class="fa fa-plus"></i> Dodaj novi proizvod u bazu</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Vrsta proizvoda</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.Naziv</td>
+                                <td class="text-left">
+                                    <a asp-action="Obrisi" asp-route-VrstaID="@x.VrstaProizvodaID" class="btn btn-warning" onclick="return confirm('Jeste li sigurni da želite izbrisati vrstu proizvoda?');"><i class="fa fa-remove"></i> Obriši</a>&nbsp
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>

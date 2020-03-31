@@ -1,0 +1,147 @@
+﻿@model Sevdah.ViewModel.RacuniUrediVM
+@{
+    ViewData["Title"] = "Uredi";
+    double ukupno = Math.Round(Model.racun.UkupnoBezPDV + (Model.racun.UkupnoBezPDV * 0.17), 2);
+    bool unosFiskalnog = false;
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Detalji računa</b></h2>
+                <hr />
+
+
+            </header>
+            <br />
+            <br />
+            <div style="margin-left:5px;">
+                <h4><b>Broj računa:</b> @Model.racun.BrojRacuna</h4>
+                @if (Model.racun.BrojFiskalnogRacuna != "")
+                {
+                    <h4><b>Broj fiskalnog računa:</b> @Model.racun.BrojFiskalnogRacuna <button id="unos" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmjeni broj fiskalnog računa</button></h4>
+                }
+                else
+                {
+                    <h4><b>Broj fiskalnog računa:</b> <span style="color:red;"><b>Nije dodano !!!</b></span> <button id="unos" class="btn btn-primary" style="background-color:orangered;border-color:brown; font-size:12px;">Unesi broj fiskalnog računa</button></h4>
+                }
+                <div id="unosFiskalnog" hidden>
+                    <form action="/Racuni/UnosFiskalnogRacuna" style="width:40%;">
+                        <input asp-for="racun.RacunID" name="RacunID" hidden />
+                        <input asp-for="racun.BrojFiskalnogRacuna" name="brojFiskalnog" class="form-control" />
+                        <br />
+                        <button id="sacuvaj" type="submit" class="btn btn-success">Sačuvaj</button>
+                    </form>
+                </div>
+
+
+
+
+                <h4><b>Datum izdavanja:</b> @Model.racun.Datum.ToShortDateString()</h4>
+                <h4><b>Kupac:</b> @Model.racun.Kupac.NazivKupca</h4>
+                <h4><b>Ukupno za naplatu:</b> @ukupno</h4>
+                <h4><b>Dosad plaćeno:</b> @Math.Round(Model.racun.DosadPlaceno, 2)</h4>
+                <h4>
+                    <b>
+                        Plaćeno:
+                    </b>
+                    @if (Model.racun.Placeno == true)
+                    {
+                        <a style="color:green;"><b>DA</b></a>
+                    }
+                    else
+                    {
+                        <a style="color:red;"><b>NE</b></a>
+
+                    }
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="pull-right">
+                    @if (Model.racun.DosadPlaceno == 0 || Model.racun.RacunID == Model.zadnjiID)
+                    {
+                        <a class="btn btn-primary" href="/Racuni/DodajStavku?RacunId=@Model.racun.RacunID" style="background-color:lawngreen;border-style:none;"><i class="fa fa-plus"></i> Dodaj stavku</a>
+                    }
+
+                    @if (Model.racun.BrojFiskalnogRacuna != "")
+                    {
+                        <a class="btn btn-primary" target="_blank" href="/Racuni/PrikaziRacunDokument?RacunId=@Model.racun.RacunID" style="background-color:lightsteelblue;border-style:none;"><i class="fa fa-file"></i> Prikaži račun</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" target="_blank" href="/Racuni/PrikaziRacunDokument?RacunId=@Model.racun.RacunID" style="background-color:lightsteelblue;border-style:none;" onclick="return confirm('Niste unijeli broj fiskalnog računa, da li ipak želie printati/prikazati račun? \nBFN je moguće i kasnije dodati ! ');"><i class="fa fa-file"></i> Prikaži račun</a>
+                    }
+
+                    <a class="btn btn-primary" href="/Racuni/IndexVirman" style="background-color:orangered;border-style:none;"><i class="fa fa-close"></i> Nazad</a>
+
+
+
+                </div>
+                <br />
+                <br />
+                <br />
+                <h3><b>Stavke računa: </b></h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Proizvod</th>
+                            <th>Količina KG</th>
+                            <th>Cijena bez PDV</th>
+                            <th>Rabat</th>
+                            <th>Iznos rabata</th>
+                            <th>Iznos bez PDV</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.listaStavki)
+                        {
+                            <tr>
+                                <td>@x.Proizvod.Naziv</td>
+                                <td>@x.KolicinaKG</td>
+                                <td>@Math.Round((x.CijenaBezPDV / x.Proizvod.Masa), 4)</td>
+                                <td>@x.Rabat %</td>
+                                <td>@Math.Round(x.IznosRabata, 2)</td>
+                                <td>@Math.Round(x.IznosBezPDV, 2)</td>
+                                <td class="text-center">
+                                    @if (Model.racun.DosadPlaceno == 0)
+                                    {
+                                        <a asp-action="Obrisi" asp-route-RacunProizvodId="@x.RacunProizvodID" asp-route-RacunId="@x.RacunID" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite izbrisati stavku računa?');">Obriši</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </section>
+</section>
+
+<script>
+    var _unosFiskalnog = false;
+    $("#unos").click(function () {
+        if (_unosFiskalnog == false) {
+            $("#unosFiskalnog").removeAttr('hidden');
+            _unosFiskalnog = !_unosFiskalnog;
+        }
+        else {
+            $("#unosFiskalnog").attr('hidden', 1);
+            _unosFiskalnog = !_unosFiskalnog
+
+        }
+
+
+    });
+
+    $("#sacuvaj").click(function () {
+        alertify.set('notifier', 'position', 'top-left');
+        alertify.success('Sacuvano!');
+
+    })
+
+</script>

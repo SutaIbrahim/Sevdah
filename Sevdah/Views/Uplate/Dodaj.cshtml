@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewData["Title"] = "Uredi";
+}
+@model UplateDodajVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <div class="panel-body">
+
+
+                <header class="panel-heading">
+                    <h2><b>Dodavanje uplate za kupca:</b> @Model.NazivKupca</h2>
+                </header>
+                <br /><br /><br />
+
+                <form asp-action="Snimi" method="post">
+
+                    <input asp-for="Dodaj" hidden />
+                    <input asp-for="KupacID" hidden />
+
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Datum ">Datum: </label>
+                                <input asp-for="Datum" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="BrojIzvoda ">Broj izvoda: </label>
+                                <input asp-for="BrojIzvoda" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="IznosUplate ">Unesite iznos uplate:</label>
+                                    <input asp-for="IznosUplate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <h7 style="color:red;"><i>Za odvajanje decimalnih mjesta koristite <b>tačku</b>  &nbsp &nbsp </i></h7><br /><br />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button id="dodaj" type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Dodaj</button>
+                                    <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </section>
+</section>
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:300px !important;">
+        <h2 style="margin:0 auto;">Dodavanje uplate...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+  //  var btn = document.getElementById("myBtn");
+    var dodaj = document.getElementById("dodaj");
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    dodaj.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>

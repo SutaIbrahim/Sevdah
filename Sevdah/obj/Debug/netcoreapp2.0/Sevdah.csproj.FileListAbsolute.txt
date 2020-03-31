@@ -1,0 +1,12 @@
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\bin\Debug\netcoreapp2.0\Sevdah.deps.json
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\bin\Debug\netcoreapp2.0\Sevdah.runtimeconfig.json
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\bin\Debug\netcoreapp2.0\Sevdah.runtimeconfig.dev.json
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\bin\Debug\netcoreapp2.0\Sevdah.dll
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\bin\Debug\netcoreapp2.0\Sevdah.pdb
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.csproj.CoreCompileInputs.cache
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.AssemblyInfoInputs.cache
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.AssemblyInfo.cs
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.dll
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.pdb
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.csprojResolveAssemblyReference.cache
+C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.csprojAssemblyReference.cache

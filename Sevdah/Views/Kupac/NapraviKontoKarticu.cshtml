@@ -1,0 +1,68 @@
+﻿@model Sevdah.ViewModel.KupacNapraviKontoKarticuVM
+@{
+    ViewData["Title"] = "Konto kartica";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Konto kartica</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+                <br />
+                <p style="color:red;">
+                    <br />
+
+
+                    @if (Model.KupacID == 23 || Model.KupacID == 20) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 2 binga ( sjever i jug )
+                    {
+                    <p style="color:red;">Pocetno stanje dugovanja u bazi je 25.7.2018, te kako bi dobili ispravne rezultate za najraniji datumOD izaberite 25.7.2018</p>
+                    <b style="color:red;">Izabrali ste BINGO, u obzir ce biti uzeti Bingo u Vrapcicima i na Biscu </b>
+                }
+                else
+                {
+                    <b>
+                        Pocetno stanje dugovanja u bazi je 25.7.2018, te kako bi dobili ispravne rezultate za najraniji datumOD izaberite 25.7.2018
+                    </b>
+                }
+
+                    <br /><br />
+
+                    <p style="font-size:large"><b>Izaberite raspon konto kartice:</b></p><br />
+
+                    <form style="width:60%;" action="/Kupac/PrikaziKontoKarticu/" target="_blank">
+                        <label asp-for="datumOd">Od:</label>
+                        <input asp-for="datumOd" class="form-control" />
+                        <br />
+                        @Html.HiddenFor(model => model.KupacID)
+                        <label asp-for="datumDo">Do:</label>
+                        <input asp-for="datumDo" class="form-control" />
+                        <br />
+                        <p style="color:red;">
+                            <b>NAPOMENA: </b><br />
+                            - Ukoliko ne unesete datum "Do", u obzir će biti uzet današnji datum!<br />
+                            - Ukoliko ne unesete datum "Od", u obzir će biti uzet datum od prije mjesec dana<br />
+                            - Datumi su u formatu mjesec/dan/godina<br />
+                        </p>
+
+                        <input asp-for="Grad" hidden />
+
+                        <button class="btn btn-success" type="submit"><i class="fa fa-file"></i> Kreiraj konto karticu</button>
+                    </form>
+                    <div class="pull-right">
+                        <a class="btn btn-danger" href="/Kupac/Index"><i class="fa fa-close"></i> Odustani</a>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+    </section>
+
+

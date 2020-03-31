@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+}
+@model KupacIndexVM
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Lista kupaca</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+
+                <div class="pull-left">
+                    <div class="form-group">
+
+                        <form asp-action="Pretraga" method="post">
+                            <div class="form-inline">
+                                <input asp-for="srchTxt" class="form-control" placeholder="Unesite naziv kupca" value="@Model.srchTxt" />
+
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+
+                                @if (Model.srchTxt != null)
+                                {
+                                    <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Kupac/Dodaj"><i class="fa fa-plus"></i> Dodaj novog kupca</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv kupca</th>
+                            <th>ID broj</th>
+                            <th>PDV broj</th>
+                            <th>Adresa</th>
+                            <th>Grad</th>
+                            <th>Kredit</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.Kupci)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.NazivKupca</td>
+                                <td>@x.ID_broj</td>
+                                <td>@x.PDV_broj</td>
+                                <td>@x.Adresa</td>
+                                <td>@x.Grad</td>
+                                <td>@x.Kredit</td>
+
+                                @*<td>@x.Dugovanje</td>*@
+
+                                <td class="text-left">
+                                    <a id="pregledRabata" asp-action="IndexKupac" asp-controller="Rabat" asp-route-KupacID="@x.KupacID" class="btn btn-success" style="width:100%;"><b>%</b> Pregled rabata</a><br /><br />
+                                    <a id="dodajUplatu" asp-action="Dodaj" asp-controller="Uplate" asp-route-KupacID="@x.KupacID" class="btn btn-success" style="width:100%;"><b>€</b> Dodaj uplatu</a><br /><br />
+                                    <a id="kreirajKontoKarticu" asp-action="NapraviKontoKarticu" asp-route-KupacID="@x.KupacID" class="btn btn-default" style="width:100%;"><i class="fa fa-file"></i> Kreiraj konto karticu</a><br /><br />
+                                    <a id="uredi" asp-action="Uredi" asp-route-KupacId="@x.KupacID" class="btn btn-warning" style="width:49%;"><i class="fa fa-edit"></i> Uredi</a>
+                                    @*<a id="obisi" asp-action="Obrisi" asp-route-KupacID="@x.KupacID" class="btn btn-danger" style="width:49%;" onclick="return confirm('Jeste li sigurni da zelite izbrisati kupca?');"><i class="fa fa-remove"></i> Obriši</a>*@
+                                    <a  class="btn btn-danger" style="width:49%;" onclick="return alert('Trenutno je onemogućeno brisanje kupaca iz baze !!!');"><i class="fa fa-remove"></i> Obriši</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var pregledRabata = document.getElementById("pregledRabata");
+    var dodajUplatu = document.getElementById("dodajUplatu");
+    var kreirajKontoKarticu = document.getElementById("kreirajKontoKarticu");
+    var uredi = document.getElementById("uredi");
+    var obrisi = document.getElementById("obrisi");
+    
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    pregledRabata.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    dodajUplatu.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    kreirajKontoKarticu.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    uredi.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    obrisi.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>
+

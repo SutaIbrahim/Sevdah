@@ -1,0 +1,112 @@
+﻿@model Sevdah.ViewModel.RacuniIndexVM
+@{
+    ViewData["Title"] = "Racuni virman";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Računi - virman</b></h2>
+            </header>
+
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+                <form action="/Racuni/IndexVirman/" style="width:75%;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="GodinaId">Odaberite godinu:</label>
+                                @Html.DropDownListFor(model => model.GodinaId, Model.listaGodina, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MjesecId">Odaberite mjesec:</label>
+                                @Html.DropDownListFor(model => model.MjesecId, Model.listaMjeseci, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-inline">
+                        <input asp-for="srchTxt" class="form-control" placeholder="Unesite naziv kupca ili broj računa" value="@Model.srchTxt" style="width:65%;" />
+                    </div>
+
+                    <br /><br />
+
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Prikaži</button>
+
+                </form>
+                <div class="pull-right">
+
+                    <a class="btn btn-primary" href="/Racuni/Dodaj"><i class="fa fa-plus"></i> Dodaj novi račun</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Broj računa</th>
+                            <th>Datum</th>
+                            <th>Kupac</th>
+                            <th>Do sada plaćeno</th>
+                            <th>Ukupno za naplatu</th>
+                            <th>Plaćeno</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.listaRacuna)
+                        {
+                            <tr>
+                                <td>@x.BrojRacuna</td>
+                                <td>@x.DatumIzdavanja.ToShortDateString()</td>
+                                <td>@x.Kupac</td>
+                                <td>@Math.Round(x.DoSadaPlaceno, 2)</td>
+                                <td>@Math.Round(x.UkupnoZaNaplatu, 2)</td>
+
+                                @if (x.Placeno == true)
+                                {
+                                    <td style="border-color:green; border-style:solid; border-width:2px;">
+                                        <a style="color:darkgreen;"><center><b>DA</b></center></a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-color:red; border-style:solid; border-width:2px">
+
+
+                                        <a style="color:darkred;"><center><b>NE</b></center></a>
+                                    </td>
+                                }
+                                <td class="text-center">
+                                    <a asp-action="Uredi" asp-route-RacunId="@x.RacunId" class="btn btn-info">Detalji</a>
+                                    @if ((x.DoSadaPlaceno != 0 || x.Placeno == true) && Model.zadnjiID != x.RacunId)
+                                    {
+                                        <a class="btn btn-default" onclick="return alert('Račun nije moguće izbrisati !!!');"><i class="fa fa-remove"></i> Obriši</a>
+                                    }
+                                    else if (x.RacunId != Model.zadnjiID)
+                                    {
+                                        <a class="btn btn-default" onclick="return alert('Račun nije moguće izbrisati !!!');"><i class="fa fa-remove"></i> Obriši</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="ObrisiRacun" asp-route-RacunId="@x.RacunId" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite izbrisati račun?');"><i class="fa fa-remove"></i> Obriši</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+

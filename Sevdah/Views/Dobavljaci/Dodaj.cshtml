@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "Dodaj";
+
+}
+
+@model DobavljacDodajVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Dodaj dobavljača</b></h2>
+
+            </header>
+            <br /><br />
+            <div class="panel-body">
+
+                <form asp-action="Snimi" method="post">
+
+                    <input asp-for="@Model.dobavljac.DobavljacID" hidden />
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Naziv">Naziv dobavljaca:</label>
+                                <input asp-for="dobavljac.Naziv" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.ID_broj">ID broj:</label>
+                                <input asp-for="dobavljac.ID_broj" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.PDV_broj">PDV broj:</label>
+                                <input asp-for="dobavljac.PDV_broj" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Telefon">Telefon:</label>
+                                <input asp-for="dobavljac.Telefon" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.ZiroRacun">Ziro racun:</label>
+                                <input asp-for="dobavljac.ZiroRacun" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Adresa">Adresa:</label>
+                                <input asp-for="dobavljac.Adresa" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label asp-for="dobavljac.GradID">Grad:</label>
+
+                                <select asp-for="dobavljac.GradID" asp-items="Model.gradovi" class="form-control"></select>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-left">
+                                <a asp-action="Dodaj" asp-controller="Grad" class="btn btn-default"><i class="fa fa-plus"></i> Dodaj novi grad u bazu</a>
+                            </div>
+                            <div class="pull-right">
+                                <button id="dodaj" type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Dodaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </section>
+</section>
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Dodavanje dobavljača...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+  //  var btn = document.getElementById("myBtn");
+    var dodaj = document.getElementById("dodaj");
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    dodaj.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>

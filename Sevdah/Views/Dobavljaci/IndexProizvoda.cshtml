@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "IndexProizvoda";
+}
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+}
+@model IndexProizvodaVM
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Lista proizvoda za dobavljača:</b> @Model.NazivDobavljaca</h2>
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Dobavljaci/DodajProizvod?DobavljacId=@Model.DobavljacId"><i class="fa fa-plus"></i> Dodaj novi proizvod</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv proizvoda</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.proizvodi)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.VrstaProizvoda.Naziv</td>
+                                <td class="text-left">
+                                    <a asp-action="ObrisiProizvod" asp-route-PDID="@x.ProizvodDobavljacID" class="btn btn-danger"><i class="fa fa-remove"></i> Obrisi</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pull-right">
+                    <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Nazad</a>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+
+

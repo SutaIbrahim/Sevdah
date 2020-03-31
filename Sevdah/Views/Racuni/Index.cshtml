@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>  &nbsp <b>Izaberite način plaćanja</b></h1>
+
+<br /><br />
+<br /><br />
+<br /><br />
+<br /><br />
+
+
+<center>
+    <a id="gotovina" href="/Racuni/IndexGotovina/" class="btn btn-primary" style="height:200px;width:40%;"><i class="fa"></i><b> GOTOVINA</b></a>
+
+    &nbsp
+    &nbsp
+    &nbsp
+
+    <a id="virman" href="/Racuni/IndexVirman" class="btn btn-primary" style="height:200px;width:40%;"><i class="fa"></i><b> VIRMAN</b></a>
+</center>
+
+<br /><br />
+<br /><br />
+<br /><br />
+<br /><br />
+<br /><br />
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+   // var btn = document.getElementById("myBtn");
+    var gotovina = document.getElementById("gotovina");
+    var virman = document.getElementById("virman");
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+    
+    virman.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    gotovina.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+   
+</script>
+
+

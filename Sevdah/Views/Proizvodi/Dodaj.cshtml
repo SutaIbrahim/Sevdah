@@ -1,0 +1,113 @@
+﻿@model Sevdah.ViewModel.ProizvodiDodajVM
+@{
+    ViewData["Title"] = "Dodaj";
+
+
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                @if (Model.proizvod.ProizvodID != 0)
+                {
+                    <h2><b>Uredi proizvod</b></h2>
+                }
+                else
+                {
+                    <h2><b>Dodaj proizvod</b></h2>
+                }
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Proizvodi/Index" style="background-color:orangered;"><i class="fa fa-close"></i> Odustani</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <form action="/Proizvodi/Snimi">
+                    @Html.HiddenFor(model => model.proizvod.ProizvodID)
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label asp-for="proizvod.Naziv">Unesite naziv:</label>
+                                <input asp-for="proizvod.Naziv" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label asp-for="proizvod.Masa">Unesite masu u kg:</label>
+                                <input asp-for="proizvod.Masa" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="CijenaBezPDVuKG">Unesite cijenu bez PDV-a (KG):</label>
+                                <input asp-for="CijenaBezPDVuKG" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="proizvod.BarKod">Unesite barkod:</label>
+                                <input asp-for="proizvod.BarKod" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="proizvod.SkladisteID">Odaberite skladište:</label>
+                                @Html.DropDownListFor(model => model.proizvod.SkladisteID, Model.listaSkladista, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="pull-right">
+                            <h7 style="color:red;"><i>Za odvajanje decimalnih mjesta koristite <b>tačku</b>    </i></h7><br /><br />
+                        </div>
+                    </div>
+
+
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="pull-right">
+
+                                @if (Model.proizvod.ProizvodID != 0)
+                                {
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Sačuvaj promjene</button>
+
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Dodaj</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+
+            </div>
+        </section>
+    </section>
+</section>
+
+

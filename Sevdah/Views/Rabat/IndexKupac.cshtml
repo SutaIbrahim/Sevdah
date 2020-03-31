@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+}
+@model RabatIndexVM
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Iznos rabata za kupca: </b>@Model.Kupac.NazivKupca</h2>
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Proizvod</th>
+                            <th>Iznos rabata</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.rabati)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.Proizvod.Naziv</td>
+                                <td>@x.IznosPostotci  %</td>
+                               <td> 
+                                   <a class="btn btn-warning" asp-action="Uredi" asp-route-rabatID="@x.OdobreniRabatID" ><i class="fa fa-edit"></i> Izmijeni</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                 
+                </table>
+                <div class="pull-right">
+                    <a asp-action="Index" asp-controller="Rabat" class="btn btn-default"><i class="fa fa-back"></i> Nazad</a>
+                </div>
+            </div>
+
+        </section>
+    </section>
+</section>

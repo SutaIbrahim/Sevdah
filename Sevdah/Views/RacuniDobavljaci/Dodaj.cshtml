@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "Dodaj";
+}
+@model RacuniDobavljacaDodajVM
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Dodaj račun</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/RacuniDobavljaci/index" style="background-color:orangered;"><i class="fa fa-close"></i> Odustani</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <form action="/RacuniDobavljaci/Snimi" style="width:40%;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label asp-for="DobavljacID ">Odaberite dobavljaca: </label>
+                                <select asp-for="DobavljacID" asp-items="@Model.Dobavljaci" class="form-control"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="BrojRacuna">Broj računa: </label>
+                                <input asp-for="BrojRacuna" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <button id="dodavanjeRacuna" type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Dodaj</button>
+                </form>
+
+            </div>
+        </section>
+    </section>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#dodavanjeRacuna").click(function () {
+            alertify.set('notifier', 'position', 'top-left');
+            alertify.success("Uspjesno dodan račun!");
+        });
+
+    })
+</script>
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    //  var btn = document.getElementById("myBtn");
+    var dodavanjeRacuna = document.getElementById("dodavanjeRacuna");
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    dodavanjeRacuna.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>
+
+
+

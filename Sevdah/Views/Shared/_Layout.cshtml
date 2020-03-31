@@ -1,0 +1,165 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Sevdah.Helpers
+@using Sevdah.Models
+
+@{
+
+    KorisnickiNalog username = Context.GetLogiraniKorisnik();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sevdah</title>
+
+    <environment include="Production">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous"></script>
+        <script src='~/lib/jquery/dist/jquery.min.js'></script>
+        <link href="~/css/loader.css" rel="stylesheet" />
+        <link href='~/css/fullcalendar.min.css' rel='stylesheet' />
+        <link href='~/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+        <script src='~/js/moment.min.js'></script>
+        <script src='~/js/fullcalendar.min.js'></script>
+
+        <!-- JavaScript -->
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/alertify.min.js"></script>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/alertify.min.css" />
+        <!-- Default theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/default.min.css" />
+        <!-- Semantic UI theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/semantic.min.css" />
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.min.css" />
+
+        <!--
+        RTL version
+    -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/alertify.rtl.min.css" />
+        <!-- Default theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/default.rtl.min.css" />
+        <!-- Semantic UI theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/semantic.rtl.min.css" />
+        <!-- Bootstrap theme -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.rtl.min.css" />
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/font-awesome.min.css" rel="stylesheet">
+        <link href="~/css/datepicker3.css" rel="stylesheet">
+        <link href="~/css/styles.css" rel="stylesheet">
+
+        <!--Custom Font-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    </environment>
+    <environment exclude="Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="#"><span style="color:#bf9216;"><img width="45" height="55" style="margin-top:-15px;padding:1px;" src="~/images/SevdahLogo_Color_v1.png" />  Sevdah </span>Caffe</a>
+                <ul class="nav navbar-top-links navbar-right"></ul>
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <div class="profile-sidebar">
+            <div class="profile-userpic">
+                <img src="~/images/KafaZrnoV2.jpg" class="img-responsive" alt="">
+            </div>
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name">@username.KorisnickoIme</div>
+                <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="divider"></div>
+
+        <ul class="nav menu">
+            <li><a href="/"><em class="fa fa-home">&nbsp;</em> Početna</a></li>
+            <li><a href="/Proizvodi/Index"><em class="fa fa-coffee">&nbsp;</em> Proizvodi</a></li>
+            <li><a href="/Skladiste/Index"><em class="fa fa-toggle-up">&nbsp;</em> Skladište</a></li>
+            <hr />
+            <li><a href="/Kupac/Index"><em class="fa fa-user">&nbsp;</em> Kupci</a></li>
+            <li><a href="/Rabat/Index"><em class=""><b>%</b>&nbsp;</em> Rabati</a></li>
+            <li><a href="/Racuni/Index"><em class="fa fa-file">&nbsp;</em> Računi</a></li>
+            <li><a href="/Otpremnice/Index"><em class="fa fa-send">&nbsp;</em> Otpremnice/revers</a></li>
+            <li><a href="/Uplate/Index"><em class="fa fa-euro">&nbsp;</em> <b></b> Uplate </a></li>
+
+            <hr />
+            <li><a href="/Dobavljaci/Index"><em class="fa fa-users">&nbsp;</em> Dobavljači</a></li>
+            <li><a href="/VrsteProizvoda/Index"><em class="fa fa-coffee">&nbsp;</em> Proizvodi dobavlj.</a></li>
+            <li><a href="/RacuniDobavljaci/Index"><em class="fa fa-file">&nbsp;</em> Računi dobavljača</a></li>
+            <li><a href="/UplateDobavljaci/Index"><em class="fa fa-euro">&nbsp;</em> <b></b> Uplate </a></li>
+
+            <hr />
+            <li><a href="/authentication/logout"><em class="fa fa-power-off">&nbsp;</em> Odjava</a></li>
+        </ul>
+    </div><!--/.sidebar-->
+
+
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+
+        <div class="panel panel-container">
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <environment include="Production">
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/chart.min.js"></script>
+        <script src="~/js/chart-data.js"></script>
+        <script src="~/js/easypiechart.js"></script>
+        <script src="~/js/easypiechart-data.js"></script>
+        <script src="~/js/bootstrap-datepicker.js"></script>
+        <script src="~/js/custom.js"></script>
+
+    </environment>
+    <environment exclude="Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

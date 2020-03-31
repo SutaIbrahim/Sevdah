@@ -1,0 +1,95 @@
+﻿@model Sevdah.ViewModel.ProizvodiIndexVM
+@{
+    ViewData["Title"] = "Index";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Proizvodi</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+
+                    <!--Prilikom dodavanja proizvoda ne dodaje se rabat za sve kupce za taj proizvod,
+                        dok pri dodavanju novog kupca dodaju se rabati za sve proizvode u bazi-->
+
+                    @*<a class="btn btn-primary" href="/Proizvodi/Dodaj"><i class="fa fa-plus"></i> Dodaj novi proizvod</a>*@
+
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bar kod</th>
+                            <th>Naziv</th>
+                            <th>Masa u KG</th>
+                            <th>Cijena bez PDV (KG)</th>
+                            <th>Cijena sa PDV (KG)</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.listaProizvoda)
+                        {
+                            <tr>
+                                <td>@x.BarKod</td>
+                                <td>@x.Naziv</td>
+                                <td>@x.MasaUKg</td>
+                                <td>@(x.CijenaBezPDV / x.MasaUKg)</td>
+                                <td>@Math.Round((x.CijenaSaPDV / x.MasaUKg ),4)</td>
+                                <td class="text-center">
+                                    <a id="uredi" asp-action="Uredi" asp-route-ProizvodId="@x.ProizvodId" class="btn btn-info">Uredi</a>
+                                    @*<a asp-action="Obrisi" asp-route-ProizvodId="@x.ProizvodId" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da zelite izbrisati uplatu?');">Obriši</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+   
+    var uredi = document.getElementById("uredi");
+   
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    
+    uredi.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+   
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>

@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+}
+@model List<Kupac>
+
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Uređivanje rabata</b></h2>
+
+            </header>
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv kupca</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.NazivKupca</td>
+
+                                <td class="text-left">
+                                    <a id="pregledRabata" asp-action="IndexKupac" asp-controller="Rabat" asp-route-KupacID="@x.KupacID" class="btn btn-success"><b>%</b> Pregled rabata</a><br /><br />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content" style="width:200px !important;">
+        <h2 style="margin:0 auto;">Učitavanje...</h2>
+        <div style="margin:0 auto;" class="loader"></div>
+    </div>
+
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var pregledRabata = document.getElementById("pregledRabata");
+   
+
+    // Get the <span> element that closes the modal
+
+    // When the user clicks the button, open the modal
+
+    pregledRabata.onclick = function () {
+        modal.style.display = "block";
+        window.location.href = $(this).attr("href");
+
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+
+
+    // When the user clicks anywhere outside of the modal, close it
+
+</script>
+

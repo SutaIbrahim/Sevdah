@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Dodaj";
+}
+@model Grad
+
+<h2><b> Dodaj</b></h2>
+
+<form asp-action="Spasi" method="post">
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Naziv">Naziv:</label>
+                <input asp-for="Naziv" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Dodaj</button>
+                <a asp-action="Index" asp-controller="home" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+            </div>
+        </div>
+    </div>
+
+</form>

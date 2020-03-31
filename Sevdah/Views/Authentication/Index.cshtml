@@ -1,0 +1,112 @@
+﻿@{
+    string poruka = (string)ViewData["error_poruka"];
+    Layout = null;
+}
+@model LoginVM
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+    <script src='~/lib/jquery/dist/jquery.min.js'></script>
+    <link href="~/css/loader.css" rel="stylesheet" />
+    <link href='~/css/fullcalendar.min.css' rel='stylesheet' />
+    <link href='~/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='~/js/moment.min.js'></script>
+    <script src='~/js/fullcalendar.min.js'></script>
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/default.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/semantic.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.min.css" />
+
+    <!--
+        RTL version
+    -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/alertify.rtl.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/default.rtl.min.css" />
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/semantic.rtl.min.css" />
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.rtl.min.css" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/css/datepicker3.css" rel="stylesheet">
+    <link href="~/css/styles.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="text-align:center;">Prijava :: Sevdah Caffe</h4>
+                </div>
+                <div class="panel-body">
+                    <img width="125" height="170" style="display: block;margin-left: auto;margin-right: auto;" src="~/images/SevdahLogo_Color_v1.png" /><br />
+                    @if (poruka != null)
+                    {
+                        <p class="alert alert-danger">@poruka</p>
+                    }
+
+
+                    <form role="form" action="/Authentication/login">
+                        <fieldset>
+                            <div class="form-group">
+                                <input asp-for="username" class="form-control" placeholder="Korisnicko ime" autofocus="">
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="password" class="form-control" placeholder="Password" type="password" value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="zapamtiPass">Zapamti
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" value="Login">Login</button>
+                            <br />
+                            <p style="text-align:center;"><b>Developed by:</b> Mirza Medar & Ibrahim Šuta </p>
+                            <p style="text-align:center;"><b>App version:</b> v03112018 </p>
+
+                            <h3 style="color:red;"><b>Username:</b> sevdah</h3>
+                            <h3 style="color:red;"><b>Password:</b> sevdah1998</h3>
+
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div asp-validation-summary="All" class="alert alert-danger"></div>
+                            }
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div><!-- /.col-->
+    </div><!-- /.row -->
+    <!-- logo-->
+    <br />
+    <br />
+
+
+    <!---->
+
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

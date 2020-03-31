@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Uredi";
+}
+@model OdobreniRabat
+<div class="panel-body">
+
+
+    <header class="panel-heading">
+        <h2><b>Iznos rabata za kupca: </b>@Model.Kupac.NazivKupca</h2>
+    </header>
+    <br /><br /><br />
+
+                <form asp-action="Snimi" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
+    {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+}
+
+
+                    <input asp-for="@Model.OdobreniRabatID" hidden />
+                    <input asp-for="@Model.ProizvodID" hidden />
+                    <input asp-for="@Model.KupacID" hidden />
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Proizvod.Naziv">Naziv proizvoda:</label>
+                                <input asp-for="Proizvod.Naziv" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="IznosPostotci">Iznos rabata (%):</label>
+                                <input asp-for="IznosPostotci" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-right">
+                        <h7 style="color:red;"><i>Za odvajanje decimalnih mjesta koristite <b>tačku</b> &nbsp &nbsp </i></h7><br /><br />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Spasi</button>
+                                <a asp-action="Index" asp-route-kupacID="@Model.KupacID" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+</div>

@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model OtpremniceIndexVM
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Izdate otpremnice / reversi</b></h2>
+            </header>
+
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+
+                <form action="/Otpremnice/Index/" style="width:75%;">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="GodinaId">Odaberite godinu:</label>
+                                @Html.DropDownListFor(model => model.GodinaId, Model.listaGodina, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MjesecId">Odaberite mjesec:</label>
+                                @Html.DropDownListFor(model => model.MjesecId, Model.listaMjeseci, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Prikaži</button>
+
+                </form>
+
+
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Otpremnice/Dodaj"><i class="fa fa-plus"></i> Dodaj novu otpremnicu ili revers</a>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID otpremnice / reversa</th>
+                            <th>Datum</th>
+                            <th>Kupac</th>
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.Otpremnice)
+                        {
+                            <tr>
+                                @if (x.Revers == true)
+                                {
+                                    <td>@x.OtpremnicaID &nbsp; <b>[REVERS]</b></td>
+                                }
+                                else
+                                {
+                                    <td>@x.OtpremnicaID</td>
+                                }
+                                <td>@x.Datum.ToShortDateString()</td>
+                                <td>@x.Kupac.NazivKupca</td>
+
+
+                                <td class="text-center">
+                                    <a asp-action="Detalji" asp-route-OtpremnicaId="@x.OtpremnicaID" class="btn btn-info">Detalji</a>
+
+                                    <a asp-action="Obrisi" asp-route-OtpremnicaId="@x.OtpremnicaID" onclick="return confirm('Jeste li sigurni da zelite izbrisati otpremnicu / revers?');" class="btn btn-danger">Obriši</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>

@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Dodaj";
+
+}
+
+@model DobavljacDodajVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Izmjena informacija o dobavljacu:</b> @Model.dobavljac.Naziv</h2>
+            </header>
+            <br /><br />
+
+
+            <div class="panel-body">
+
+                <form asp-action="SnimiUredi" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+                    <input asp-for="@Model.dobavljac.DobavljacID" hidden />
+                    <input asp-for="@Model.dobavljac.Kredit" hidden />
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Naziv">Naziv dobavljaca:</label>
+                                <input asp-for="dobavljac.Naziv" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.ID_broj">ID broj:</label>
+                                <input asp-for="dobavljac.ID_broj" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.PDV_broj">PDV broj:</label>
+                                <input asp-for="dobavljac.PDV_broj" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Telefon">Telefon:</label>
+                                <input asp-for="dobavljac.Telefon" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.ZiroRacun">Ziro racun:</label>
+                                <input asp-for="dobavljac.ZiroRacun" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="dobavljac.Adresa">Adresa:</label>
+                                <input asp-for="dobavljac.Adresa" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label asp-for="dobavljac.GradID">Grad:</label>
+
+                                <select asp-for="dobavljac.GradID" asp-items="Model.gradovi" class="form-control"></select>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Spasi</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+</section>

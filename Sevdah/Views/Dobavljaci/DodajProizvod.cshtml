@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "DodajProizvod";
+}
+@model DodajProizvodDobavljacVM
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Dodaj proizvod za dobavljaca:</b> @Model.NazivDobavljaca </h2>
+
+            </header>
+
+            <div class="panel-body">
+
+                <form asp-action="SnimiProizvod" method="post">
+
+                    <input asp-for="@Model.ProizvodDobavljac.ProizvodDobavljacID" hidden />
+
+                    <input asp-for="@Model.DobavljacId" hidden />
+
+                    @if (!ViewData.ModelState.IsValid)
+    {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+}
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ProizvodDobavljac.VrstaProizvodaID">Proizvod:</label>
+                                <select asp-for="ProizvodDobavljac.VrstaProizvodaID" asp-items="@Model.Proizvodi" class="form-control" ></select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj proizvod</button>
+                                <a asp-action="IndexProizvoda" asp-route-DobavljacId="@Model.DobavljacId" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </section>
+</section>

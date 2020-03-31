@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 0;
+    DateTime datum = DateTime.Now;
+}
+@model UplateDobavljaciIndexVM
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Lista uplata prema dobavljačima</b></h2>
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+
+
+                <form action="/UplateDobavljaci/Index/" style="width:75%;">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="GodinaId">Odaberite godinu</label>
+                                @Html.DropDownListFor(model => model.GodinaId, Model.listaGodina, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MjesecId">Odaberite mjesec:</label>
+                                @Html.DropDownListFor(model => model.MjesecId, Model.listaMjeseci, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-inline">
+                        <input asp-for="srchTxt" class="form-control" placeholder="Unesite naziv dobavljaca ili broj izvoda" value="@Model.srchTxt" style="width:65%;" />
+                    </div>
+
+                    <br /><br />
+
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Prikaži</button>
+
+                </form>
+
+
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Dobavljaci/Index"><i class="fa fa-plus"></i> Dodaj novu uplatu</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Broj izvoda</th>
+                            <th>Naziv kupca</th>
+                            <th>Datum uplate</th>
+                            <th>Iznos uplate</th>
+
+                            <th>Akcija</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.Uplate)
+                        {
+                            <tr>
+                                <td>@(++brojac)</td>
+                                <td>@x.Brojizvoda</td>
+                                <td>@x.Dobavljac.Naziv</td>
+                                <td>@x.Datum</td>
+                                <td>@x.Iznos</td>
+
+                                @if (x.Datum.Year == datum.Year && (x.Datum.Month == datum.Month || x.Datum.Month == datum.AddMonths(-1).Month))
+                                {
+                                    <td class="text-left">
+                                        <a asp-action="Obrisi" asp-route-UplataID="@x.UplataDobavljacuID" class="btn btn-danger" style="width:100%;" onclick="return confirm('Jeste li sigurni da želite izbrisati uplatu?');"><i class="fa fa-remove"></i> Obriši uplatu</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-left">
+                                        <a class="btn btn-default" style="width:100%;" onclick="return alert('Uplatu nije moguce izbrisati !!!');"><i class="fa fa-remove"></i> Obriši uplatu</a>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>

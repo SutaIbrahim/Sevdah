@@ -1,0 +1,96 @@
+﻿@model Sevdah.ViewModel.RacuniIndexVM
+@{
+    ViewData["Title"] = "Racuni gotovina";
+
+    DateTime datum = DateTime.Now;
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Gotovinski računi</b></h2>
+
+            </header>
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <form action="/Racuni/IndexGotovina/" style="width:75%;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="GodinaId">Odaberite godinu:</label>
+                                @Html.DropDownListFor(model => model.GodinaId, Model.listaGodina, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="MjesecId">Odaberite mjesec:</label>
+                                @Html.DropDownListFor(model => model.MjesecId, Model.listaMjeseci, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Traži</button>
+                </form>
+                <div class="pull-right">
+
+                    <a class="btn btn-primary" href="/Racuni/SnimiGotovniski"><i class="fa fa-plus"></i> Dodaj novi račun</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Datum</th>
+                            <th>Kupac</th>
+                            <th>Ukupno za naplatu</th>
+                            @*<th>Placeno</th>*@
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var x in Model.listaRacuna)
+                        {
+                            <tr>
+                                <td>@x.RacunId</td>
+                                <td>@x.DatumIzdavanja.ToShortDateString()</td>
+                                <td>@x.Kupac</td>
+                                @*<td>---</td>*@
+                                <td>@Math.Round(x.UkupnoZaNaplatu, 2)</td>
+                                @*<td>
+                                        @if (x.Placeno == true)
+                                        {
+                                            <a style="background-color:forestgreen;color:white;">DA</a>
+                                        }
+                                        else
+                                        {
+                                            <a style="background-color:red;color:white;">NE</a>
+                                        }
+                                    </td>*@
+                                <td class="text-left">
+                                    <a asp-action="UrediGotovinski" asp-route-RacunId="@x.RacunId" class="btn btn-info">Detalji</a>
+
+                                    @if ((x.DatumIzdavanja.Month == datum.Month) || (x.DatumIzdavanja.Month == datum.AddDays(-15).Month))
+                                    {
+                                        <a asp-action="ObrisiGotovinskiRacun" asp-route-RacunId="@x.RacunId" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da zelite izbrisati račun?');"><i class="fa fa-remove"></i> Obriši</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-default" onclick="return alert('Račun nije moguće izbrisati !!!');"><i class="fa fa-remove"></i> Obriši</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+
+
