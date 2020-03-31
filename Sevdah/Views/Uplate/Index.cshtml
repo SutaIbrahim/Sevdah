@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     int brojac = 0;
     DateTime datum = DateTime.Now;
@@ -13,15 +12,12 @@
 
             <header class="panel-heading">
                 <h2><b>Lista uplata od kupaca</b></h2>
-
             </header>
             <br />
             <br />
 
             <div class="panel-body">
-
                 <form action="/Uplate/Index/" style="width:75%;">
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -35,7 +31,6 @@
                                 @Html.DropDownListFor(model => model.MjesecId, Model.listaMjeseci, new { @class = "form-control" })
                             </div>
                         </div>
-
                     </div>
                     <div class="form-inline">
                         <input asp-for="srchTxt" class="form-control" placeholder="Unesite naziv kupca ili broj izvoda" value="@Model.srchTxt" style="width:65%;" />
@@ -44,7 +39,6 @@
                     <br /><br />
 
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Prikaži</button>
-
                 </form>
 
                 <div class="pull-right">
@@ -99,4 +93,3 @@
         </section>
     </section>
 </section>
-
