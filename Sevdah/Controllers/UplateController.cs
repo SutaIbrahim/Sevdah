@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.ViewModel;
 using Sevdah.Data;
@@ -38,7 +37,7 @@ namespace Sevdah.Controllers
                 else
                 {
                     // tacan naziv ili broj izvoda
-                    model.Uplate = db.Uplate.Include(p => p.Kupac).Include(z => z.Kupac).Where(x => (x.Kupac.NazivKupca.StartsWith(podaci.srchTxt) || x.BrojIzvoda.StartsWith(podaci.srchTxt) )).ToList();
+                    model.Uplate = db.Uplate.Include(p => p.Kupac).Include(z => z.Kupac).Where(x => (x.Kupac.NazivKupca.StartsWith(podaci.srchTxt) || x.BrojIzvoda.StartsWith(podaci.srchTxt))).ToList();
                 }
 
                 model.listaGodina = new List<SelectListItem>();
@@ -113,7 +112,6 @@ namespace Sevdah.Controllers
         //    return View("Index", model);
         //}
 
-
         public IActionResult Dodaj(int KupacID)
         {
             UplateDodajVM model = new UplateDodajVM();
@@ -125,8 +123,6 @@ namespace Sevdah.Controllers
             model.IznosUplate = 0;
 
             model.Dodaj = true;
-
-            model.Datum = DateTime.Now;
 
             model.BrojIzvoda = "";
 
@@ -196,7 +192,7 @@ namespace Sevdah.Controllers
                 if (NoviIznos > 0)
                 {
                     Kupac kupac = db.Kupci.Where(x => x.KupacID == model.KupacID).FirstOrDefault();
-                    kupac.Kredit += Math.Round(NoviIznos,4);
+                    kupac.Kredit += Math.Round(NoviIznos, 4);
 
                     db.Kupci.Update(kupac);
                     db.SaveChanges();

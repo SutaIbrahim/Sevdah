@@ -1,10 +1,8 @@
-﻿
+﻿@model KupacDodajVM
+
 @{
     ViewData["Title"] = "Dodaj";
-
 }
-
-@model KupacDodajVM
 
 <section id="main-content">
     <section class="wrapper">
@@ -16,7 +14,6 @@
 
             <br /><br />
 
-
             <div class="panel-body">
 
                 <form asp-action="SnimiUredi" method="post">
@@ -25,9 +22,9 @@
                     {
                         <div asp-validation-summary="All" class="alert alert-danger"></div>
                     }
+
                     <input asp-for="@Model.Kupac.KupacID" hidden />
                     <input asp-for="@Model.Kupac.Kredit" hidden />
-
 
                     <div class="row">
                         <div class="col-md-4">
@@ -50,7 +47,6 @@
                                 <input asp-for="Kupac.PDV_broj" class="form-control" />
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -63,17 +59,18 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-
                                 <label asp-for="Kupac.GradID">Grad:</label>
                                 <select asp-for="Kupac.GradID" asp-items="Model.gradovi" class="form-control"></select>
-
-
-
                             </div>
                         </div>
 
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Kupac.VirmanDani">Virman - broj dana na računu:</label>
+                                <input type="number" asp-for="Kupac.VirmanDani" class="form-control" />
+                            </div>
+                        </div>
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-12">

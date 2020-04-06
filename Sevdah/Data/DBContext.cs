@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Sevdah.Models;
 
 namespace Sevdah.Data
@@ -22,10 +18,8 @@ namespace Sevdah.Data
         public DbSet<Grad> Gradovi { get; set; }
         public DbSet<OdobreniRabat> OdobreniRabat { get; set; }
         public DbSet<Skladiste> Skladiste { get; set; }
-
         public DbSet<Otpremnica> Otpremnica { get; set; }
         public DbSet<OtpremnicaProizvod> OtpremnicaProizvod { get; set; }
-
 
         //
 
@@ -40,6 +34,5 @@ namespace Sevdah.Data
 
         public DbSet<KorisnickiNalog> KorisnickiNalog { get; set; }
         public DbSet<AutorizacijskiToken> AutorizacijskiToken { get; set; }
-
     }
 }

@@ -31,11 +31,11 @@
                 <form style="width:60%;" action="/Dobavljaci/PrikaziKontoKarticu/" target="_blank">
                     <input asp-for="Grad" hidden />
                     <label asp-for="datumOd">Od:</label>
-                    <input asp-for="datumOd" class="form-control" />
+                    <input type="text" asp-for="datumOdString" class="form-control date-picker" />
                     <br />
                     @Html.HiddenFor(model => model.DobavljacID)
                     <label asp-for="datumDo">Do:</label>
-                    <input asp-for="datumDo" class="form-control" />
+                    <input type="text" asp-for="datumDoString" class="form-control date-picker" />
                     <br />
                     <p style="color:red;">
                         <b>NAPOMENA: </b><br />

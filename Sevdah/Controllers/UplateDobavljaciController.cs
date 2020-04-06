@@ -110,8 +110,6 @@ namespace Sevdah.Controllers
 
             model.Dodaj = true;
 
-            model.Datum = DateTime.Now;
-
             model.BrojIzvoda = "";
 
             return View(model);

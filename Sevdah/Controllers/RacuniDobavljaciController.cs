@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +25,6 @@ namespace Sevdah.Controllers
         public IActionResult Index(RacuniDobavljacaIndexVM podaci)
         {
             RacuniDobavljacaIndexVM model = new RacuniDobavljacaIndexVM();
-
-           
 
             if (podaci != null && podaci.GodinaId != 0 && podaci.MjesecId != 0)
             {
@@ -65,7 +62,6 @@ namespace Sevdah.Controllers
                 model.GodinaId = podaci.GodinaId;
                 model.MjesecId = podaci.MjesecId;
                 model.srchTxt = podaci.srchTxt;
-
 
                 if (model.Racuni.Count != 0)
                 {
@@ -105,7 +101,6 @@ namespace Sevdah.Controllers
             model.GodinaId = DateTime.Now.Year;
             model.MjesecId = DateTime.Now.Month;
 
-
             if (model.Racuni.Count != 0)
             {
                 //zadnji ID
@@ -127,7 +122,6 @@ namespace Sevdah.Controllers
             }).ToList();
 
             return View(model);
-
         }
 
         public IActionResult Snimi(RacuniDobavljacaDodajVM model)
@@ -136,7 +130,7 @@ namespace Sevdah.Controllers
 
             racun.BrojRacuna = model.BrojRacuna;
             racun.DobavljacID = model.DobavljacID;
-            racun.Datum = DateTime.Now;
+            racun.Datum = Convert.ToDateTime(model.Datum);
             racun.UkupnoBezPDV = 0;
             racun.UkupnoSaPDV = 0;
             racun.DosadPlaceno = 0;
@@ -265,7 +259,6 @@ namespace Sevdah.Controllers
 
             return RedirectToAction(nameof(Detalji), new { RacunId = model.stavka.RacunDobavljacaID });
         }
-
 
         public IActionResult ObrisiStavku(int StavkaId)
         {

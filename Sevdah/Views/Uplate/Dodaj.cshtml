@@ -1,8 +1,8 @@
-﻿
+﻿@model UplateDodajVM
+
 @{
     ViewData["Title"] = "Uredi";
 }
-@model UplateDodajVM
 
 <section id="main-content">
     <section class="wrapper">
@@ -11,6 +11,7 @@
                 <header class="panel-heading">
                     <h2><b>Dodavanje uplate za kupca:</b> @Model.NazivKupca</h2>
                 </header>
+
                 <br /><br /><br />
 
                 <form asp-action="Snimi" method="post">
@@ -26,8 +27,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Datum ">Datum: </label>
-                                <input asp-for="Datum" class="form-control" />
+                                <label asp-for="DatumString ">Datum: </label>
+                                <input asp-for="DatumString" class="form-control date-picker" />
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -78,7 +79,7 @@
     var modal = document.getElementById('myModal');
 
     // Get the button that opens the modal
-  //  var btn = document.getElementById("myBtn");
+    //  var btn = document.getElementById("myBtn");
     var dodaj = document.getElementById("dodaj");
     // Get the <span> element that closes the modal
 

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-
 
 namespace Sevdah.Models
 {
@@ -15,7 +10,6 @@ namespace Sevdah.Models
         public int RacunID { get; set; }
 
         public string BrojRacuna  { get; set; }
-
         public string BrojFiskalnogRacuna { get; set; }
 
         public DateTime Datum { get; set; }
@@ -26,9 +20,10 @@ namespace Sevdah.Models
         public double DosadPlaceno { get; set; }
         public bool Placeno { get; set; } // 
 
+        public bool IsPredracun { get; set; } = false;
+
         [ForeignKey(nameof(Kupac))]
         public int KupacID { get; set; }
         public Kupac Kupac { get; set; }
-
     }
 }

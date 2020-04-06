@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using eUniverzitet.Web.Helper;
-using Ispit.Web.Helper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Sevdah.Data;
 using Sevdah.Models;
@@ -66,8 +60,6 @@ namespace Sevdah.Helpers
                 .Where(x => x.Vrijednost == token)
                 .Select(s => s.KorisnickiNalog)
                 .SingleOrDefault();
-
         }
-
     }
 }

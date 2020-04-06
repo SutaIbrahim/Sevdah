@@ -23,8 +23,5 @@ namespace Sevdah.Models
 
         public float IznosPostotci { get; set; }
 
-
-
-
     }
 }

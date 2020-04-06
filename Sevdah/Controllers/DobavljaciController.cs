@@ -255,24 +255,18 @@ namespace Sevdah.Controllers
             return RedirectToAction(nameof(IndexProizvoda), new { DobavljacId = id });
         }
 
-        //
         public IActionResult NapraviKontoKarticu(int DobavljacId)
         {
             DobavljacNapraviKontoKarticuVM Model = new DobavljacNapraviKontoKarticuVM();
-            Model.datumOd = DateTime.Now;
-            Model.datumOd = DateTime.Now.AddDays(-31);
-            Model.datumDo = DateTime.Now;
+            Model.datumOdString = DateTime.Now.AddDays(-31).ToShortDateString();
+            Model.datumDoString = DateTime.Now.ToShortDateString();
             Model.DobavljacID = DobavljacId;
             Model.Grad = db.Dobavljaci.Where(x => x.DobavljacID == DobavljacId).Include(p => p.Grad).FirstOrDefault().Grad.Naziv;
             return View(Model);
         }
 
-
         public IActionResult PrikaziKontoKarticu(DobavljacNapraviKontoKarticuVM model)
         {
-
-
-
             List<RacunDobavljaca> listaRacunaDb = new List<RacunDobavljaca>();
 
             List<UplataDobavljacu> listaUplataDb = new List<UplataDobavljacu>();
@@ -324,7 +318,6 @@ namespace Sevdah.Controllers
             //    VezniDokument = "Prethodno stanje"
 
             //});
-
 
             for (int i = 0; i < listaRacunaDb.Count(); i++)
             {

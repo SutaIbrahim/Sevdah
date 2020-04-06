@@ -1,12 +1,9 @@
-﻿@using Microsoft.AspNetCore.Http;
-@using Sevdah.Helpers
+﻿@using Sevdah.Helpers
 @using Sevdah.Models
 
 @{
-
     KorisnickiNalog username = Context.GetLogiraniKorisnik();
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +51,7 @@
         <link href="~/css/font-awesome.min.css" rel="stylesheet">
         <link href="~/css/datepicker3.css" rel="stylesheet">
         <link href="~/css/styles.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
         <!--Custom Font-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -99,29 +97,30 @@
             <li><a href="/"><em class="fa fa-home">&nbsp;</em> Početna</a></li>
             <li><a href="/Proizvodi/Index"><em class="fa fa-coffee">&nbsp;</em> Proizvodi</a></li>
             <li><a href="/Skladiste/Index"><em class="fa fa-toggle-up">&nbsp;</em> Skladište</a></li>
+
             <hr />
+
             <li><a href="/Kupac/Index"><em class="fa fa-user">&nbsp;</em> Kupci</a></li>
             <li><a href="/Rabat/Index"><em class=""><b>%</b>&nbsp;</em> Rabati</a></li>
-            <li><a href="/Racuni/Index"><em class="fa fa-file">&nbsp;</em> Računi</a></li>
+            <li><a href="/Racuni/Index"><em style="color:cornflowerblue;" class="fa fa-file">&nbsp;</em> Računi</a></li>
+            <li><a href="/Predracuni/Index"><em style="color:orangered;" class="fa fa-file">&nbsp;</em> Predračuni</a></li>
             <li><a href="/Otpremnice/Index"><em class="fa fa-send">&nbsp;</em> Otpremnice/revers</a></li>
             <li><a href="/Uplate/Index"><em class="fa fa-euro">&nbsp;</em> <b></b> Uplate </a></li>
 
             <hr />
+
             <li><a href="/Dobavljaci/Index"><em class="fa fa-users">&nbsp;</em> Dobavljači</a></li>
             <li><a href="/VrsteProizvoda/Index"><em class="fa fa-coffee">&nbsp;</em> Proizvodi dobavlj.</a></li>
             <li><a href="/RacuniDobavljaci/Index"><em class="fa fa-file">&nbsp;</em> Računi dobavljača</a></li>
             <li><a href="/UplateDobavljaci/Index"><em class="fa fa-euro">&nbsp;</em> <b></b> Uplate </a></li>
 
             <hr />
+
             <li><a href="/authentication/logout"><em class="fa fa-power-off">&nbsp;</em> Odjava</a></li>
         </ul>
     </div><!--/.sidebar-->
 
-
-
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-
-
         <div class="panel panel-container">
             <div class="row">
                 <div class="col-md-12">
@@ -130,7 +129,6 @@
             </div>
         </div>
     </div>
-
 
     <environment include="Production">
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -143,7 +141,6 @@
         <script src="~/js/easypiechart-data.js"></script>
         <script src="~/js/bootstrap-datepicker.js"></script>
         <script src="~/js/custom.js"></script>
-
     </environment>
     <environment exclude="Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -160,6 +157,17 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+    <script>
+        $(".date-picker").datepicker({
+            format: 'dd.mm.yyyy',
+            autoclose: true
+        });
+
+        $(".select2").select2();
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

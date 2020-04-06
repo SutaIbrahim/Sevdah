@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +9,6 @@ using Sevdah.Models;
 namespace Sevdah.Helpers
 
 {
-
     public class AutorizacijaAttribute : TypeFilterAttribute
     {
         public AutorizacijaAttribute(bool osoba)
@@ -56,11 +52,11 @@ namespace Sevdah.Helpers
                 return;
             }
 
-
             if (filterContext.Controller is Controller c1)
             {
                 c1.ViewData["error_poruka"] = "Nemate pravo pristupa";
             }
+
             filterContext.Result = new RedirectToActionResult("Index", "Home", new { @area = "" });
         }
 

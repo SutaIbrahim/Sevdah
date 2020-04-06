@@ -8,5 +8,4 @@ C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.A
 C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.AssemblyInfo.cs
 C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.dll
 C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.pdb
-C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.csprojResolveAssemblyReference.cache
 C:\Users\Ibrahim\Source\Repos\Sevdah\App\Sevdah\obj\Debug\netcoreapp2.0\Sevdah.csprojAssemblyReference.cache

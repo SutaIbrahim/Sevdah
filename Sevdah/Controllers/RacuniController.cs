@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,9 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Sevdah.Controllers
 {
-
     [Autorizacija(osoba: true)]
-
     public class RacuniController : Controller
     {
         private DBContext _db;
@@ -28,15 +25,12 @@ namespace Sevdah.Controllers
             return View();
         }
 
-
-
-        // VIRMAN
-
-        public IActionResult IndexVirman(RacuniIndexVM  podaci)
+        #region VIRMAN
+        public IActionResult IndexVirman(RacuniIndexVM podaci)
         {
             RacuniIndexVM Model = new RacuniIndexVM();
 
-            if (podaci!=null && podaci.GodinaId!=0 && podaci.MjesecId != 0)
+            if (podaci != null && podaci.GodinaId != 0 && podaci.MjesecId != 0)
             {
 
                 Model.listaRacuna = new List<RacuniIndexVM.Row>();
@@ -44,7 +38,7 @@ namespace Sevdah.Controllers
                 if (podaci.srchTxt == null)
                 {
 
-                    Model.listaRacuna = _db.Racuni.Include(x => x.Kupac).Where(x => (x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
+                    Model.listaRacuna = _db.Racuni.Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
                     {
                         RacunId = x.RacunID,
                         BrojRacuna = x.BrojRacuna,
@@ -59,7 +53,7 @@ namespace Sevdah.Controllers
                 {
                     podaci.srchTxt = podaci.srchTxt.ToLower();
 
-                    Model.listaRacuna = _db.Racuni.OrderBy(d=>d.Datum).Include(x => x.Kupac).Where(x =>(x.Kupac.NazivKupca.ToLower().Contains(podaci.srchTxt) || x.BrojRacuna.StartsWith(podaci.srchTxt)) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
+                    Model.listaRacuna = _db.Racuni.OrderBy(d => d.Datum).Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Kupac.NazivKupca.ToLower().Contains(podaci.srchTxt) || x.BrojRacuna.StartsWith(podaci.srchTxt)) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
                     {
                         RacunId = x.RacunID,
                         BrojRacuna = x.BrojRacuna,
@@ -71,7 +65,6 @@ namespace Sevdah.Controllers
                     }).ToList();
 
                 }
-
 
                 Model.listaGodina = new List<SelectListItem>();
                 for (int i = 2018; i < 2030; i++)
@@ -93,16 +86,14 @@ namespace Sevdah.Controllers
                 Model.listaMjeseci.Add(new SelectListItem { Value = 11.ToString(), Text = "Novembar" });
                 Model.listaMjeseci.Add(new SelectListItem { Value = 12.ToString(), Text = "Decembar" });
 
-
                 Model.GodinaId = podaci.GodinaId;
                 Model.MjesecId = podaci.MjesecId;
                 Model.srchTxt = podaci.srchTxt;
 
-
                 if (Model.listaRacuna.Count != 0)
                 {
                     //zadnji ID !!!!
-                    Model.zadnjiID = _db.Racuni.Max(p => p.RacunID);
+                    Model.zadnjiID = _db.Racuni.Where(x => !x.IsPredracun).Max(p => p.RacunID);
                     //
                 }
 
@@ -111,17 +102,16 @@ namespace Sevdah.Controllers
 
             //else
 
-
             Model = new RacuniIndexVM();
             Model.listaRacuna = new List<RacuniIndexVM.Row>();
-            Model.listaRacuna = _db.Racuni.Where(x=>(x.Datum.Month==DateTime.Now.Month)&&(x.Datum.Year==DateTime.Now.Year)&x.Kupac.NazivKupca!="---").Select(x => new RacuniIndexVM.Row
+            Model.listaRacuna = _db.Racuni.Where(x => x.IsPredracun == false && (x.Datum.Month == DateTime.Now.Month) && (x.Datum.Year == DateTime.Now.Year) & x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
             {
                 RacunId = x.RacunID,
                 BrojRacuna = x.BrojRacuna,
                 DatumIzdavanja = x.Datum,
                 DoSadaPlaceno = x.DosadPlaceno,
                 Kupac = x.Kupac.NazivKupca,
-                UkupnoZaNaplatu = x.UkupnoBezPDV+(x.UkupnoBezPDV*x.PDV),
+                UkupnoZaNaplatu = x.UkupnoBezPDV + (x.UkupnoBezPDV * x.PDV),
                 Placeno = x.Placeno
             }).ToList();
 
@@ -152,7 +142,7 @@ namespace Sevdah.Controllers
             if (Model.listaRacuna.Count != 0)
             {
                 //zadnji ID !!!!
-                Model.zadnjiID = _db.Racuni.Max(p => p.RacunID);
+                Model.zadnjiID = _db.Racuni.Where(x=>!x.IsPredracun).Max(p => p.RacunID);
                 //
             }
 
@@ -163,7 +153,7 @@ namespace Sevdah.Controllers
             RacuniDodajVM Model = new RacuniDodajVM();
             Model.racun = new Models.Racun();
             Model.listaKupaca = new List<SelectListItem>();
-            Model.listaKupaca = _db.Kupci.Where(p=>p.NazivKupca!="---").Select(x => new SelectListItem
+            Model.listaKupaca = _db.Kupci.Where(p => p.NazivKupca != "---").Select(x => new SelectListItem
             {
                 Value = x.KupacID.ToString(),
                 Text = x.NazivKupca
@@ -175,7 +165,7 @@ namespace Sevdah.Controllers
         {
             Racun novi = new Racun
             {
-                BrojRacuna = (_db.Racuni.Include(x=>x.Kupac).Where(x => (x.Datum.Year == DateTime.Now.Year) && x.Kupac.NazivKupca!="---").ToList().Count + 1).ToString() + "/" + DateTime.Now.Year.ToString().Substring(2, 2),
+                BrojRacuna = (_db.Racuni.Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Year == DateTime.Now.Year) && x.Kupac.NazivKupca != "---").ToList().Count + 1).ToString() + "/" + DateTime.Now.Year.ToString().Substring(2, 2),
                 Datum = DateTime.Now,
                 DosadPlaceno = 0,
                 KupacID = model.racun.KupacID,
@@ -185,6 +175,7 @@ namespace Sevdah.Controllers
                 Placeno = false,
                 BrojFiskalnogRacuna = ""
             };
+
             _db.Racuni.Add(novi);
             _db.SaveChanges();
             return RedirectToAction("Uredi", new { RacunId = novi.RacunID });
@@ -205,7 +196,7 @@ namespace Sevdah.Controllers
                 if (Racuni.Count != 0)
                 {
                     //zadnji ID !!!!
-                    Model.zadnjiID = _db.Racuni.Max(p => p.RacunID);
+                    Model.zadnjiID = _db.Racuni.Where(x => !x.IsPredracun).Max(p => p.RacunID);
                     //
                 }
                 //
@@ -243,38 +234,38 @@ namespace Sevdah.Controllers
                 Proizvod proizvodStavka = _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault();
                 pronadjena.KolicinaKG += model.komada;
                 _db.Skladiste.Where(x => x.SkladisteID == _db.Proizvodi.Where(y => y.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().SkladisteID).FirstOrDefault().KolicinaUKg -= model.komada;
-                pronadjena.IznosRabata += Math.Round((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100),4);
-                pronadjena.IznosBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)),4);
-                _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)),4);
+                pronadjena.IznosRabata += Math.Round((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100), 4);
+                pronadjena.IznosBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)), 4);
+                _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)), 4);
                 _db.SaveChanges();
 
-            
-                    if (k.Kredit < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                    {
-                        r.DosadPlaceno += (double)k.Kredit;
-                        k.Kredit = 0;
-                        _db.SaveChanges();
-                    }
-                    else if (k.Kredit > ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                    {
-                        double dug = ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno);
-                        r.DosadPlaceno += dug;
-                        k.Kredit -= dug;
-                        r.Placeno = true;
-                        _db.SaveChanges();
-                    }
 
-
-                    if (r.DosadPlaceno < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                    {
-                        r.Placeno = false;
-                    }
-                    else
-                    {
-                        r.Placeno = true;
-                    }
-
+                if (k.Kredit < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+                {
+                    r.DosadPlaceno += (double)k.Kredit;
+                    k.Kredit = 0;
                     _db.SaveChanges();
+                }
+                else if (k.Kredit > ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+                {
+                    double dug = ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno);
+                    r.DosadPlaceno += dug;
+                    k.Kredit -= dug;
+                    r.Placeno = true;
+                    _db.SaveChanges();
+                }
+
+
+                if (r.DosadPlaceno < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+                {
+                    r.Placeno = false;
+                }
+                else
+                {
+                    r.Placeno = true;
+                }
+
+                _db.SaveChanges();
 
                 return RedirectToAction("Uredi", new { RacunId = model.RacunId });
             }
@@ -295,57 +286,57 @@ namespace Sevdah.Controllers
             {
                 novaStavka.Rabat = _db.OdobreniRabat.Where(x => x.KupacID == model.KupacId && x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().IznosPostotci;
             }
-            novaStavka.IznosRabata = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa)* _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV * (novaStavka.Rabat / 100),4);
-            novaStavka.IznosBezPDV = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV-novaStavka.IznosRabata,4);
+            novaStavka.IznosRabata = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV * (novaStavka.Rabat / 100), 4);
+            novaStavka.IznosBezPDV = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV - novaStavka.IznosRabata, 4);
             _db.RacunProizvodi.Add(novaStavka);
             _db.SaveChanges();
             _db.Skladiste.Where(x => x.SkladisteID == _db.Proizvodi.Where(y => y.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().SkladisteID).FirstOrDefault().KolicinaUKg -= model.komada;
             _db.SaveChanges();
-            _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV +=Math.Round(novaStavka.IznosBezPDV,4);
+            _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(novaStavka.IznosBezPDV, 4);
             _db.SaveChanges();
 
 
-                if (k.Kredit < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                {
-                    r.DosadPlaceno += Math.Round((double)k.Kredit,2);
-                    k.Kredit = 0;
-                    _db.SaveChanges();
-                }
-                else if (k.Kredit > ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                {
-                    double dug = Math.Round(((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno),2);
-                    r.DosadPlaceno += dug;
-                    k.Kredit -= dug;
-                    r.Placeno = true;
-                    _db.SaveChanges();
-                }
-
-
-                if (r.DosadPlaceno < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
-                {
-                    r.Placeno = false;
-                }
-                else
-                {
-                    r.Placeno = true;
-                }
-
+            if (k.Kredit < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+            {
+                r.DosadPlaceno += Math.Round((double)k.Kredit, 2);
+                k.Kredit = 0;
                 _db.SaveChanges();
+            }
+            else if (k.Kredit > ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+            {
+                double dug = Math.Round(((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno), 2);
+                r.DosadPlaceno += dug;
+                k.Kredit -= dug;
+                r.Placeno = true;
+                _db.SaveChanges();
+            }
+
+
+            if (r.DosadPlaceno < ((r.UkupnoBezPDV + (r.UkupnoBezPDV * r.PDV)) - r.DosadPlaceno))
+            {
+                r.Placeno = false;
+            }
+            else
+            {
+                r.Placeno = true;
+            }
+
+            _db.SaveChanges();
 
             return RedirectToAction("Uredi", new { RacunId = model.RacunId });
         }
-        public IActionResult Obrisi(int RacunProizvodId,int RacunId)
+        public IActionResult Obrisi(int RacunProizvodId, int RacunId)
         {
             RacunProizvod stavka = _db.RacunProizvodi.Where(x => x.RacunProizvodID == RacunProizvodId).FirstOrDefault();
 
             Racun r = _db.Racuni.Where(x => x.RacunID == RacunId).FirstOrDefault();
-            _db.Kupci.Where(x => x.KupacID == r.KupacID).FirstOrDefault().Kredit +=stavka.IznosBezPDV+(stavka.IznosBezPDV*r.PDV);
+            _db.Kupci.Where(x => x.KupacID == r.KupacID).FirstOrDefault().Kredit += stavka.IznosBezPDV + (stavka.IznosBezPDV * r.PDV);
 
             _db.Racuni.Where(x => x.RacunID == stavka.RacunID).FirstOrDefault().UkupnoBezPDV -= stavka.IznosBezPDV;
             _db.Skladiste.Where(x => x.SkladisteID == _db.Proizvodi.Where(y => y.ProizvodID == stavka.ProizvodID).FirstOrDefault().SkladisteID).FirstOrDefault().KolicinaUKg += stavka.KolicinaKG;
             _db.RacunProizvodi.Remove(stavka);
             _db.SaveChanges();
-            return RedirectToAction("Uredi",new { RacunId=RacunId});
+            return RedirectToAction("Uredi", new { RacunId = RacunId });
         }
         public IActionResult ObrisiRacun(int RacunId)
         {
@@ -367,38 +358,23 @@ namespace Sevdah.Controllers
             byte[] docArray;
             RacuniReportVM Model = new RacuniReportVM();
             RacunReport report = new RacunReport();
-            Model.racun = _db.Racuni.Where(x => x.RacunID == RacunId).Include(x=>x.Kupac).ThenInclude(x=>x.Grad).FirstOrDefault();
+            Model.racun = _db.Racuni.Where(x => x.RacunID == RacunId).Include(x => x.Kupac).ThenInclude(x => x.Grad).FirstOrDefault();
             Model.listaStavki = new List<RacunProizvod>();
             Model.listaStavki = _db.RacunProizvodi.Include(x => x.Proizvod).Include(x => x.Racun).Where(x => x.RacunID == RacunId).ToList();
             docArray = report.PrepareReport(Model);
             return File(docArray, "application/pdf");
 
         }
-        public IActionResult UnosFiskalnogRacuna(string RacunID,string brojFiskalnog)
+        public IActionResult UnosFiskalnogRacuna(string RacunID, string brojFiskalnog)
         {
             Racun r = _db.Racuni.Where(x => x.RacunID == int.Parse(RacunID)).FirstOrDefault();
             r.BrojFiskalnogRacuna = brojFiskalnog;
             _db.SaveChanges();
             return RedirectToAction("Uredi", new { RacunId = int.Parse(RacunID) });
         }
-        public IActionResult UzmiJsonPodatke()
-        {
-            CalendarApiVM Model = new CalendarApiVM();
-            Model.listaRacuna = new List<CalendarApiVM.Row>();
-            Model.listaRacuna = _db.Racuni.Select(x => new CalendarApiVM.Row
-            {
-                start = x.Datum.ToString("yyyy-MM-dd"),
-                title = x.Kupac.NazivKupca
-            }).ToList();
-            return Json(Model.listaRacuna);
-        }
-        //
+        #endregion
 
-        //////////////////////////
-
-        //
-
-        //GOTOVINA
+        #region GOTOVINA
         public IActionResult IndexGotovina(RacuniIndexVM podaci)
         {
             RacuniIndexVM Model;
@@ -407,7 +383,7 @@ namespace Sevdah.Controllers
             {
                 Model = new RacuniIndexVM();
                 Model.listaRacuna = new List<RacuniIndexVM.Row>();
-                Model.listaRacuna = _db.Racuni.Include(x=>x.Kupac).Where(x => (x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId)&&x.Kupac.NazivKupca=="---").Select(x => new RacuniIndexVM.Row
+                Model.listaRacuna = _db.Racuni.Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId) && x.Kupac.NazivKupca == "---").Select(x => new RacuniIndexVM.Row
                 {
                     RacunId = x.RacunID,
                     BrojRacuna = x.BrojRacuna,
@@ -417,6 +393,7 @@ namespace Sevdah.Controllers
                     UkupnoZaNaplatu = x.UkupnoBezPDV + (x.UkupnoBezPDV * x.PDV),
                     Placeno = x.Placeno
                 }).ToList();
+
                 Model.listaGodina = new List<SelectListItem>();
                 for (int i = 2018; i < 2030; i++)
                 {
@@ -442,9 +419,10 @@ namespace Sevdah.Controllers
 
                 return View(Model);
             }
+
             Model = new RacuniIndexVM();
             Model.listaRacuna = new List<RacuniIndexVM.Row>();
-            Model.listaRacuna = _db.Racuni.Include(x=>x.Kupac).Where(x => (x.Datum.Month == DateTime.Now.Month)&&x.Kupac.NazivKupca=="---").Select(x => new RacuniIndexVM.Row
+            Model.listaRacuna = _db.Racuni.Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Month == DateTime.Now.Month) && x.Kupac.NazivKupca == "---").Select(x => new RacuniIndexVM.Row
             {
                 RacunId = x.RacunID,
                 BrojRacuna = x.BrojRacuna,
@@ -478,22 +456,23 @@ namespace Sevdah.Controllers
             Model.MjesecId = DateTime.Now.Month;
 
             return View(Model);
-            
+
         }
         public IActionResult SnimiGotovniski()
         {
             Racun novi = new Racun
             {
-                BrojRacuna = (_db.Racuni.Where(x => x.Datum.Year == DateTime.Now.Year).ToList().Count + 1).ToString() + "/" + DateTime.Now.Year.ToString().Substring(2, 2) + " >>> Gotovinski",
+                BrojRacuna = (_db.Racuni.Where(x => x.IsPredracun == false && x.Datum.Year == DateTime.Now.Year).ToList().Count + 1).ToString() + "/" + DateTime.Now.Year.ToString().Substring(2, 2) + " >>> Gotovinski",
                 Datum = DateTime.Now,
                 DosadPlaceno = 0,
-                KupacID = _db.Kupci.Where(x=>x.NazivKupca=="---").FirstOrDefault().KupacID,
+                KupacID = _db.Kupci.Where(x => x.NazivKupca == "---").FirstOrDefault().KupacID,
                 PDV = (float)0.17,
                 UkupnoZaNaplatu = 0,
                 UkupnoBezPDV = 0,
                 Placeno = true,
                 BrojFiskalnogRacuna = ""
             };
+
             _db.Racuni.Add(novi);
             _db.SaveChanges();
             return RedirectToAction("UrediGotovinski", new { RacunId = novi.RacunID });
@@ -515,9 +494,9 @@ namespace Sevdah.Controllers
                 Proizvod proizvodStavka = _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault();
                 pronadjena.KolicinaKG += model.komada;
                 _db.Skladiste.Where(x => x.SkladisteID == _db.Proizvodi.Where(y => y.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().SkladisteID).FirstOrDefault().KolicinaUKg -= model.komada;
-                pronadjena.IznosRabata += Math.Round((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100),4);
-                pronadjena.IznosBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)),4);
-                _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)),4);
+                pronadjena.IznosRabata += Math.Round((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100), 4);
+                pronadjena.IznosBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)), 4);
+                _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV) - ((model.komada / proizvodStavka.Masa) * proizvodStavka.CijenaBezPDV * (pronadjena.Rabat / 100)), 4);
                 _db.SaveChanges();
                 return RedirectToAction("UrediGotovinski", new { RacunId = model.RacunId });
             }
@@ -538,13 +517,13 @@ namespace Sevdah.Controllers
             {
                 novaStavka.Rabat = _db.OdobreniRabat.Where(x => x.KupacID == model.KupacId && x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().IznosPostotci;
             }
-            novaStavka.IznosRabata = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV * (novaStavka.Rabat / 100),4);
-            novaStavka.IznosBezPDV = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV - novaStavka.IznosRabata,4);
+            novaStavka.IznosRabata = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV * (novaStavka.Rabat / 100), 4);
+            novaStavka.IznosBezPDV = Math.Round((model.komada / _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().Masa) * _db.Proizvodi.Where(x => x.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().CijenaBezPDV - novaStavka.IznosRabata, 4);
             _db.RacunProizvodi.Add(novaStavka);
             _db.SaveChanges();
             _db.Skladiste.Where(x => x.SkladisteID == _db.Proizvodi.Where(y => y.ProizvodID == model.stavka.ProizvodID).FirstOrDefault().SkladisteID).FirstOrDefault().KolicinaUKg -= model.komada;
             _db.SaveChanges();
-            _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(novaStavka.IznosBezPDV,4);
+            _db.Racuni.Where(x => x.RacunID == model.RacunId).FirstOrDefault().UkupnoBezPDV += Math.Round(novaStavka.IznosBezPDV, 4);
             _db.SaveChanges();
             return RedirectToAction("UrediGotovinski", new { RacunId = model.RacunId });
         }
@@ -581,6 +560,19 @@ namespace Sevdah.Controllers
             r.BrojFiskalnogRacuna = brojFiskalnog;
             _db.SaveChanges();
             return RedirectToAction("UrediGotovinski", new { RacunId = int.Parse(RacunID) });
+        }
+        #endregion
+
+        public IActionResult UzmiJsonPodatke()
+        {
+            CalendarApiVM Model = new CalendarApiVM();
+            Model.listaRacuna = new List<CalendarApiVM.Row>();
+            Model.listaRacuna = _db.Racuni.Select(x => new CalendarApiVM.Row
+            {
+                start = x.Datum.ToString("yyyy-MM-dd"),
+                title = x.Kupac.NazivKupca
+            }).ToList();
+            return Json(Model.listaRacuna);
         }
     }
 }

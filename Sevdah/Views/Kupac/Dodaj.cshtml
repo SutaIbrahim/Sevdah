@@ -1,10 +1,8 @@
-﻿
+﻿@model KupacDodajVM
+
 @{
     ViewData["Title"] = "Dodaj";
-
 }
-
-@model KupacDodajVM
 
 <section id="main-content">
     <section class="wrapper">
@@ -50,7 +48,6 @@
                                 <input asp-for="Kupac.PDV_broj" class="form-control" />
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -63,18 +60,19 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-
                                 <label asp-for="Kupac.GradID">Grad:</label>
 
                                 <select asp-for="Kupac.GradID" asp-items="Model.gradovi" class="form-control"></select>
-
-
-
                             </div>
                         </div>
 
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Kupac.VirmanDani">Virman - broj dana na računu:</label>
+                                <input type="number" asp-for="Kupac.VirmanDani" class="form-control" />
+                            </div>
+                        </div>
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-12">
@@ -87,8 +85,8 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
+
             </div>
         </section>
     </section>
@@ -100,7 +98,6 @@
         <h2 style="margin:0 auto;">Dodavanje kupca...</h2>
         <div style="margin:0 auto;" class="loader"></div>
     </div>
-
 </div>
 
 <script>
@@ -124,5 +121,4 @@
 
 
     // When the user clicks anywhere outside of the modal, close it
-
 </script>

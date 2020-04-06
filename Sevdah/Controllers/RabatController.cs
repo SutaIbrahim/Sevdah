@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.ViewModel;
 using Sevdah.Data;
 using Microsoft.EntityFrameworkCore;
 using Sevdah.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Sevdah.Helpers;
 
 namespace Sevdah.Controllers
 {
-
     [Autorizacija(osoba: true)]
     public class RabatController : Controller
     {
@@ -31,12 +27,11 @@ namespace Sevdah.Controllers
             return View(model);
         }
 
-
         public IActionResult IndexKupac(int KupacID)
         {
             RabatIndexVM model = new RabatIndexVM();
 
-            model.rabati = db.OdobreniRabat.Include(x=>x.Proizvod).Where(p=>p.KupacID==KupacID).ToList();
+            model.rabati = db.OdobreniRabat.Include(x => x.Proizvod).Where(p => p.KupacID == KupacID).ToList();
 
             model.Kupac = db.Kupci.Where(x => x.KupacID == KupacID).FirstOrDefault();
 
@@ -46,7 +41,7 @@ namespace Sevdah.Controllers
 
         public IActionResult Uredi(int rabatID)
         {
-            OdobreniRabat model = db.OdobreniRabat.Include(y=>y.Proizvod).Include(p=>p.Kupac).Where(x => x.OdobreniRabatID == rabatID).FirstOrDefault();
+            OdobreniRabat model = db.OdobreniRabat.Include(y => y.Proizvod).Include(p => p.Kupac).Where(x => x.OdobreniRabatID == rabatID).FirstOrDefault();
 
             return View(model);
         }

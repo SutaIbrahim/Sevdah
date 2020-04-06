@@ -9,9 +9,8 @@
 <section id="main-content">
     <section class="wrapper">
         <section class="panel">
-
             <header class="panel-heading">
-                @if (Model.otpremnica.Revers == true)
+                @if (Model.otpremnica.Revers)
                 {
                     <h2><b>Detalji o reversu</b></h2>
                 }
@@ -95,6 +94,5 @@
     $("#sacuvaj").click(function () {
         alertify.set('notifier', 'position', 'top-left');
         alertify.success('Sačuvano!');
-
     })
 </script>

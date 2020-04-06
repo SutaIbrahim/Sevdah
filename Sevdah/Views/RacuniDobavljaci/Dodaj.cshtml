@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Dodaj";
 }
+
 @model RacuniDobavljacaDodajVM
 <section id="main-content">
     <section class="wrapper">
@@ -9,7 +9,6 @@
 
             <header class="panel-heading">
                 <h2><b>Dodaj račun</b></h2>
-
             </header>
             <br />
             <br />
@@ -21,16 +20,21 @@
                 <br />
                 <br />
                 <br />
-                <form action="/RacuniDobavljaci/Snimi" style="width:40%;">
+                <form action="/RacuniDobavljaci/Snimi" style="width:80%;">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label asp-for="DobavljacID ">Odaberite dobavljaca: </label>
-                                <select asp-for="DobavljacID" asp-items="@Model.Dobavljaci" class="form-control"></select>
+                                <select asp-for="DobavljacID" asp-items="@Model.Dobavljaci" class="form-control select2"></select>
                             </div>
                         </div>
-
                         <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Datum ">Datum: </label>
+                                <input type="text" asp-for="Datum" class="form-control date-picker" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="BrojRacuna">Broj računa: </label>
                                 <input asp-for="BrojRacuna" class="form-control" />
@@ -39,7 +43,6 @@
                     </div>
                     <button id="dodavanjeRacuna" type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Dodaj</button>
                 </form>
-
             </div>
         </section>
     </section>
@@ -59,7 +62,6 @@
         <h2 style="margin:0 auto;">Učitavanje...</h2>
         <div style="margin:0 auto;" class="loader"></div>
     </div>
-
 </div>
 
 <script>
@@ -76,7 +78,6 @@
     dodavanjeRacuna.onclick = function () {
         modal.style.display = "block";
         window.location.href = $(this).attr("href");
-
     }
 
     // When the user clicks on <span> (x), close the modal

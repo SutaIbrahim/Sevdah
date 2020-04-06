@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Sevdah.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
+using Sevdah.Helpers;
+using System.Linq;
+using Sevdah.Helpers.FloatModelBinder;
+using Sevdah.Helpers.DoubleModelBinder;
 
 namespace Sevdah
 {
@@ -12,25 +16,30 @@ namespace Sevdah
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration _configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            string connectionString = Configuration.GetConnectionString("SevdahLocal_Development");
+            string connectionString = _configuration.GetConnectionString("SevdahLocal_Development");
             services.AddDbContext<DBContext>(options => options.UseSqlServer(connectionString));
 
             //tacka i zarez konfilt - https://dotnetcoretutorials.com/2017/06/22/request-culture-asp-net-core/
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.DefaultRequestCulture = new RequestCulture("en-GB"); //en-US kod datuma prvo stavi mjesec pa dan a en-GB prvo dan pa mjesec
+                options.DefaultRequestCulture = new RequestCulture(Configuration.DefaultCulture, Configuration.DefaultCulture);
+                options.SupportedCultures = options.SupportedUICultures = Configuration.SupportedSystemLanguages.Select(sl => sl.CultureInfo).ToList();
             });
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
+                options.ModelBinderProviders.Insert(3, new FloatModelBinderProvider());
+
+            });
 
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -54,7 +63,6 @@ namespace Sevdah
             app.UseStaticFiles();
 
             //tacka i zarez konfilt
-            app.UseRequestLocalization();
 
             app.UseMvc(routes =>
             {

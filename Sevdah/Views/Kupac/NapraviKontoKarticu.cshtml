@@ -39,11 +39,11 @@
 
                     <form style="width:60%;" action="/Kupac/PrikaziKontoKarticu/" target="_blank">
                         <label asp-for="datumOd">Od:</label>
-                        <input asp-for="datumOd" class="form-control" />
+                        <input type="text" asp-for="datumOdString" class="form-control date-picker" />
                         <br />
                         @Html.HiddenFor(model => model.KupacID)
                         <label asp-for="datumDo">Do:</label>
-                        <input asp-for="datumDo" class="form-control" />
+                        <input type="text" asp-for="datumDoString" class="form-control date-picker" />
                         <br />
                         <p style="color:red;">
                             <b>NAPOMENA: </b><br />

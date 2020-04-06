@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sevdah.Models
 {
     public class Kupac
     {
-
         [Key]
         public int KupacID { get; set; }
 
@@ -29,8 +24,9 @@ namespace Sevdah.Models
         public int GradID { get; set; }
         public Grad Grad { get; set; }
 
+        [Required]
+        public int? VirmanDani { get; set; } = 10;
 
         public double? Kredit { get; set; } // u slucaju da kupac pretplati sve račune, cuva visak uplate 
-
     }
 }

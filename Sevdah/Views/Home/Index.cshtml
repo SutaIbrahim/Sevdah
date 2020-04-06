@@ -1,11 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model bool
+
+@{
+    ViewData["Title"] = "Početna";
     DateTime datum = DateTime.Now;
 }
-@model bool
+
 <style>
-
-
     body {
         margin: 40px 10px;
         padding: 0;
@@ -18,9 +18,8 @@
         margin: 0 auto;
     }
 </style>
+
 <script>
-
-
     $(document).ready(function () {
         $('#calendar').fullCalendar({
             header: {
@@ -55,6 +54,7 @@
         })
     });
 </script>
+
 @if (datum.Month == 12 && (datum.Day == 31 || datum.Day == 30))
 {
     <center>
@@ -70,7 +70,6 @@
     </center>
 }
 
-
 @if (Model == true)
 {
     <center>
@@ -83,15 +82,11 @@
     </center>
 }
 
-
-
-
-
-<center><h1>Kalendar izdatih računa</h1></center>
+<center><h1>Kalendar izdanih računa</h1></center>
 <hr />
 <div id="calendar"></div>
 
 <br /><br />
 <br /><br />
 
-<p style="text-align:right;"><b>Developed by:</b> Ibrahim Šuta & Mirza Medar </p> 
+<p style="text-align:right;padding-right:20px;"><b>Developed by:</b> Ibrahim Šuta & Mirza Medar </p>

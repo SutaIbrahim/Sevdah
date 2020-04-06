@@ -27,16 +27,13 @@
                         <div asp-validation-summary="All" class="alert alert-danger"></div>
                     }
 
-
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Datum ">Datum: </label>
-                                <input asp-for="Datum" class="form-control" />
+                                <label asp-for="DatumString ">Datum: </label>
+                                <input asp-for="DatumString" class="form-control date-picker" />
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="BrojIzvoda ">Broj izvoda: </label>

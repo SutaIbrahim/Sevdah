@@ -50,9 +50,7 @@ namespace Sevdah.Migrations
 
                     b.Property<int>("GradID");
 
-                    b.Property<string>("ID_broj")
-                        .IsRequired()
-                        .HasMaxLength(14);
+                    b.Property<string>("ID_broj");
 
                     b.Property<double?>("Kredit");
 
@@ -60,15 +58,11 @@ namespace Sevdah.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("PDV_broj")
-                        .IsRequired()
-                        .HasMaxLength(13);
+                    b.Property<string>("PDV_broj");
 
-                    b.Property<string>("Telefon")
-                        .HasMaxLength(100);
+                    b.Property<string>("Telefon");
 
-                    b.Property<string>("ZiroRacun")
-                        .HasMaxLength(100);
+                    b.Property<string>("ZiroRacun");
 
                     b.HasKey("DobavljacID");
 
@@ -114,8 +108,7 @@ namespace Sevdah.Migrations
                     b.Property<int>("GradID");
 
                     b.Property<string>("ID_broj")
-                        .IsRequired()
-                        .HasMaxLength(14);
+                        .IsRequired();
 
                     b.Property<double?>("Kredit");
 
@@ -124,8 +117,9 @@ namespace Sevdah.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("PDV_broj")
-                        .IsRequired()
-                        .HasMaxLength(13);
+                        .IsRequired();
+
+                    b.Property<int?>("VirmanDani");
 
                     b.HasKey("KupacID");
 
@@ -246,6 +240,8 @@ namespace Sevdah.Migrations
                     b.Property<DateTime>("Datum");
 
                     b.Property<double>("DosadPlaceno");
+
+                    b.Property<bool>("IsPredracun");
 
                     b.Property<int>("KupacID");
 

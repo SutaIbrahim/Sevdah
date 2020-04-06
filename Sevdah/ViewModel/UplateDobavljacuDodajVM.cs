@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sevdah.ViewModel
 {
     public class UplateDobavljacuDodajVM
     {
-
         public int DobavljacID { get; set; }
         public string NazivDobavljaca { get; set; }
 
@@ -16,8 +12,7 @@ namespace Sevdah.ViewModel
         public bool Dodaj { get; set; }
         public string BrojIzvoda { get; set; }
 
-        public DateTime Datum { get; set; }
-
-
+        public string DatumString { get; set; } = DateTime.Now.ToShortDateString();
+        public DateTime Datum => Convert.ToDateTime(DatumString);
     }
 }

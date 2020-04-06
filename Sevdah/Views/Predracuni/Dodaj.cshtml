@@ -1,0 +1,51 @@
+﻿@model Sevdah.ViewModel.RacuniDodajVM
+
+@{
+    ViewData["Title"] = "Dodaj";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+
+            <header class="panel-heading">
+                <h2><b>Dodaj predračun</b></h2>
+            </header>
+
+            <br />
+            <br />
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Predracuni/Index" style="background-color:orangered;"><i class="fa fa-close"></i> Odustani</a>
+                </div>
+                <br />
+                <br />
+                <br />
+                <form action="/Predracuni/Snimi" style="width:40%;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="racun.KupacID">Odaberite kupca: </label>
+                                @Html.DropDownListFor(model => model.racun.KupacID, Model.listaKupaca, new { @class = "form-control select2" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <button id="dodavanjeRacuna" type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Dodaj</button>
+                </form>
+            </div>
+        </section>
+    </section>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#dodavanjeRacuna").click(function () {
+            alertify.set('notifier', 'position', 'top-left');
+            alertify.success("Uspjesno dodan predračun!");
+        });
+    })
+</script>
+
+

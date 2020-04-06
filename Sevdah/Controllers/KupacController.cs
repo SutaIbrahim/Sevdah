@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.ViewModel;
 using Sevdah.Models;
@@ -24,7 +23,6 @@ namespace Sevdah.Controllers
 
         public IActionResult Index()
         {
-
             KupacIndexVM model = new KupacIndexVM();
 
             model.Kupci = db.Kupci.Include(x => x.Grad).Where(p => p.NazivKupca != "---").Select(y => new KupacIndexVM.Row()
@@ -75,17 +73,14 @@ namespace Sevdah.Controllers
 
             model.Kupac = new Kupac();
 
-
             model.gradovi = db.Gradovi.Select(x => new SelectListItem
             {
                 Text = x.Naziv,
                 Value = x.GradID.ToString()
             }).ToList();
 
-
             return View(model);
         }
-
 
         public IActionResult Uredi(int KupacId)
         {
@@ -97,7 +92,6 @@ namespace Sevdah.Controllers
 
             model.gradovi = db.Gradovi.Select(x => new SelectListItem
             {
-
                 Text = x.Naziv,
                 Value = x.GradID.ToString()
 
@@ -105,7 +99,6 @@ namespace Sevdah.Controllers
 
 
             return View(model);
-
         }
 
         public IActionResult Snimi(KupacDodajVM model)
@@ -124,7 +117,6 @@ namespace Sevdah.Controllers
                 }).ToList();
 
                 return View("Dodaj", model2);
-
             }
 
             model.Kupac.Kredit = 0; // dodano 21.6
@@ -144,7 +136,6 @@ namespace Sevdah.Controllers
 
             foreach (var x in proizvodi)
             {
-
                 OdobreniRabat rabat = new OdobreniRabat();
 
                 rabat.KupacID = kupac.KupacID;
@@ -162,7 +153,6 @@ namespace Sevdah.Controllers
         {
             if (!ModelState.IsValid)
             {
-
                 KupacDodajVM model2 = new KupacDodajVM();
 
                 model2.Kupac = model.Kupac;
@@ -177,7 +167,6 @@ namespace Sevdah.Controllers
                 return View("Uredi", model2);
             }
 
-
             Kupac edit;
             edit = db.Kupci.Where(x => x.KupacID == model.Kupac.KupacID).FirstOrDefault();
 
@@ -187,12 +176,12 @@ namespace Sevdah.Controllers
             edit.NazivKupca = model.Kupac.NazivKupca;
             edit.Adresa = model.Kupac.Adresa;
             edit.Kredit = model.Kupac.Kredit;
+            edit.VirmanDani = model.Kupac.VirmanDani;
 
             db.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
-
 
         public IActionResult Obrisi(int KupacID)
         {
@@ -211,15 +200,14 @@ namespace Sevdah.Controllers
                 db.SaveChanges();
             }
 
-
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult NapraviKontoKarticu(int KupacID)
         {
             KupacNapraviKontoKarticuVM Model = new KupacNapraviKontoKarticuVM();
-            Model.datumOd = DateTime.Now.AddDays(-31);
-            Model.datumDo = DateTime.Now;
+            Model.datumOdString = DateTime.Now.AddDays(-31).ToShortDateString();
+            Model.datumDoString = DateTime.Now.ToShortDateString();
             Model.KupacID = KupacID;
 
             Model.Grad = db.Kupci.Where(x => x.KupacID == KupacID).Include(p => p.Grad).FirstOrDefault().Grad.Naziv;
@@ -229,7 +217,6 @@ namespace Sevdah.Controllers
         {
             List<Racun> listaRacunaDb = new List<Racun>();
             List<Uplata> listaUplataDb = new List<Uplata>();
-
 
             //prethodno stanje !
             List<Racun> listaRacunaDbPRE = new List<Racun>();
@@ -242,7 +229,7 @@ namespace Sevdah.Controllers
             if (model.KupacID == 20 || model.KupacID == 23) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 2 binga ( sjever i jug )
             {
                 //PRETHODNO DUGOVANJE
-                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
+                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
 
                 listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
 
@@ -256,34 +243,31 @@ namespace Sevdah.Controllers
                 }
                 //
 
-                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && (x.KupacID == 20 || x.KupacID==23)).ToList();
+                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
 
                 listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
             }
             else
             {
                 //PRETHODNO DUGOVANJE
-                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => ( x.Datum>=pocetnoStanjeAplikacije &&x.Datum < model.datumOd) && x.KupacID == model.KupacID).ToList();
+                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).ToList();
 
                 listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).ToList();
 
-                for(int i = 0; i < listaRacunaDbPRE.Count(); i++)
+                for (int i = 0; i < listaRacunaDbPRE.Count(); i++)
                 {
-                    dugPRE += listaRacunaDbPRE[i].UkupnoBezPDV + (listaRacunaDbPRE[i].UkupnoBezPDV*0.17); 
+                    dugPRE += listaRacunaDbPRE[i].UkupnoBezPDV + (listaRacunaDbPRE[i].UkupnoBezPDV * 0.17);
                 }
-                for(int i = 0; i < listaUplataDbPRE.Count(); i++)
+                for (int i = 0; i < listaUplataDbPRE.Count(); i++)
                 {
                     uplataPRE += listaUplataDbPRE[i].Iznos;
                 }
                 //
 
-
-                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).ToList();
+                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).ToList();
 
                 listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).ToList();
             }
-
-
 
             KupacKontoKartica Model = new KupacKontoKartica();
             Model.DatumOd = model.datumOd;
@@ -352,10 +336,6 @@ namespace Sevdah.Controllers
 
             byte[] docArray = novi.PrepareReport(Model);
             return File(docArray, "application/pdf");
-
         }
-
-
-
     }
 }
