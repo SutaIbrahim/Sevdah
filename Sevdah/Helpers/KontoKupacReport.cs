@@ -1,12 +1,8 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Sevdah.Data;
 using Sevdah.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sevdah.Helpers
 {
@@ -21,7 +17,6 @@ namespace Sevdah.Helpers
         PdfPCell _pdfPCell;
         MemoryStream _memoryStream = new MemoryStream();
         KupacKontoKartica _redovi = new KupacKontoKartica();
-       
 
         public byte[] PrepareReport(KupacKontoKartica redovi)
         {
@@ -55,7 +50,7 @@ namespace Sevdah.Helpers
             slika.ScaleAbsoluteWidth(51);
             _document.Add(slika);
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("Pržionica kafe", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -65,8 +60,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("O.R \"Sevdah\"", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
