@@ -28,7 +28,6 @@ namespace eUniverzitet.Web.Helper
             else
                 option.Expires = DateTime.Now.AddDays(7);
 
-
             string strValue = JsonConvert.SerializeObject(value);
 
             response.Cookies.Append(key, strValue, option);

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
 using Sevdah.Helpers;
 using Sevdah.Models;
 
 namespace Sevdah.Controllers
 {
-
     [Autorizacija(osoba: true)]
     public class GradController : Controller
     {
@@ -22,18 +17,15 @@ namespace Sevdah.Controllers
 
         public IActionResult Dodaj()
         {
-            Grad model = new Grad();
-            return View(model);
+            return View(new Grad());
         }
 
         public IActionResult Spasi(Grad Model)
         {
-
             db.Gradovi.Add(Model);
             db.SaveChanges();
 
             return RedirectToAction("Index", "Kupac");
         }
-
     }
 }

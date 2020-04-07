@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
@@ -13,7 +10,6 @@ namespace Sevdah.Controllers
 {
     public class AuthenticationController : Controller
     {
-
         private DBContext db;
 
         public AuthenticationController(DBContext db)
@@ -39,12 +35,14 @@ namespace Sevdah.Controllers
                 zapamtiPass = true
             });
         }
+
         public IActionResult Login(LoginVM model)
         {
             if (!ModelState.IsValid)
             {
                 return View("Index", model);
             }
+
             KorisnickiNalog korisnik = db.KorisnickiNalog.Where(x => x.KorisnickoIme == model.username && x.Lozinka == model.password).FirstOrDefault();
 
             if (korisnik == null)
@@ -60,13 +58,9 @@ namespace Sevdah.Controllers
 
         public IActionResult Logout()
         {
-            string token= HttpContext.GetTrenutniToken();
+            string token = HttpContext.GetTrenutniToken();
 
-
-            return RedirectToAction("Obrisi", "Sesija");
+            return RedirectToAction("Obrisi", "Sesija", new { token });
         }
-
-
-
     }
 }

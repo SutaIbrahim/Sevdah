@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -22,17 +21,7 @@ namespace Sevdah.Controllers
 
         public IActionResult Index()
         {
-            List<Skladiste> skladiste = db.Skladiste.ToList();
-
-            bool niskoStanje = false;
-
-            foreach (var x in skladiste)
-            {
-                if (x.KolicinaUKg < 20)
-                {
-                    niskoStanje = true;
-                }
-            }
+            var niskoStanje = db.Skladiste.Any(x => x.KolicinaUKg < 20);
 
             return View(niskoStanje);
         }

@@ -7,7 +7,6 @@ using Sevdah.Data;
 using Sevdah.Models;
 
 namespace Sevdah.Helpers
-
 {
     public class AutorizacijaAttribute : TypeFilterAttribute
     {
@@ -45,7 +44,6 @@ namespace Sevdah.Helpers
             //Preuzimamo DbContext preko app services
             DBContext db = filterContext.HttpContext.RequestServices.GetService<DBContext>();
 
-            //ucenici mogu pristupiti studenti
             if (_osoba && db.KorisnickiNalog.Any(s => s.ID == k.ID))
             {
                 await next(); //ok - ima pravo pristupa
@@ -57,7 +55,7 @@ namespace Sevdah.Helpers
                 c1.ViewData["error_poruka"] = "Nemate pravo pristupa";
             }
 
-            filterContext.Result = new RedirectToActionResult("Index", "Home", new { @area = "" });
+            filterContext.Result = new RedirectToActionResult("Index", "Authentication", new { @area = "" });
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

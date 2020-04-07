@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
 using Sevdah.Helpers;
@@ -13,7 +11,6 @@ namespace Sevdah.Controllers
 
     public class VrsteProizvodaController : Controller
     {
-
 
         DBContext db;
         public VrsteProizvodaController(DBContext db)
@@ -36,9 +33,9 @@ namespace Sevdah.Controllers
 
             return View(model);
         }
+
         public IActionResult Spasi(VrstaProizvoda Model)
         {
-
             db.VrsteProizvoda.Add(Model);
             db.SaveChanges();
 
@@ -52,9 +49,6 @@ namespace Sevdah.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
-
         }
-
-
     }
 }

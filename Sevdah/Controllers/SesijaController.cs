@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
 using Sevdah.Helpers;
@@ -10,7 +7,7 @@ using Sevdah.ViewModel;
 
 namespace Sevdah.Controllers
 {
-    [Autorizacija(osoba:true)]
+    [Autorizacija(osoba: true)]
     public class SesijaController : Controller
     {
         private DBContext _db;
@@ -22,7 +19,6 @@ namespace Sevdah.Controllers
 
         public IActionResult Index()
         {
-           
             SesijaIndexVM model = new SesijaIndexVM();
             model.Rows = _db.AutorizacijskiToken.Select(s => new SesijaIndexVM.Row
             {
@@ -30,19 +26,21 @@ namespace Sevdah.Controllers
                 token = s.Vrijednost,
                 IpAdresa = s.IpAdresa
             }).ToList();
+
             model.TrenutniToken = HttpContext.GetTrenutniToken();
+
             return View(model);
         }
 
         public IActionResult Obrisi(string token)
         {
-            AutorizacijskiToken obrisati =_db.AutorizacijskiToken.FirstOrDefault(x => x.Vrijednost == token);
+            AutorizacijskiToken obrisati = _db.AutorizacijskiToken.FirstOrDefault(x => x.Vrijednost == token);
             if (obrisati != null)
             {
                 _db.AutorizacijskiToken.Remove(obrisati);
                 _db.SaveChanges();
             }
-            return RedirectToAction("Index","Authentication");
+            return RedirectToAction("Index", "Authentication");
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Sevdah.Helpers
         MemoryStream _memoryStream = new MemoryStream();
         OtpremnicaReportVM _otpremnicaPodaci = new OtpremnicaReportVM();
 
-
         public byte[] PrepareReport(OtpremnicaReportVM otpremnicaPodaci)
         {
             _otpremnicaPodaci = otpremnicaPodaci;
@@ -53,7 +52,7 @@ namespace Sevdah.Helpers
             slika.ScaleAbsoluteWidth(51);
             _document.Add(slika);
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("Pržionica kafe", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -64,7 +63,7 @@ namespace Sevdah.Helpers
             _pdfTable.CompleteRow();
 
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("O.R \"Sevdah\"", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -74,7 +73,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("BISCE POLJE b.b", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -84,7 +83,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("Mostar", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -94,7 +93,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("Tel: 061-164-879", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -104,7 +103,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("Email: sewdah@gmail.com", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -114,7 +113,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("ŽIRO-RACUN br. 194-105-11436011-88", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -124,7 +123,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("Pro Credit Bank", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -134,7 +133,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("ID: 4327537010006", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -144,7 +143,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("PDV: 327537010006", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -177,7 +176,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase(this._otpremnicaPodaci._kupac.Grad.Naziv, _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -189,7 +188,7 @@ namespace Sevdah.Helpers
 
             if (_otpremnicaPodaci._kupac.NazivKupca == "---")
             {
-                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
                 _pdfPCell = new PdfPCell(new Phrase("", _fontStyle));
                 _pdfPCell.Colspan = _totalColumns;
                 _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -201,7 +200,7 @@ namespace Sevdah.Helpers
             }
             else
             {
-                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
                 _pdfPCell = new PdfPCell(new Phrase("ID: " + _otpremnicaPodaci._kupac.ID_broj, _fontStyle));
                 _pdfPCell.Colspan = _totalColumns;
                 _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -214,7 +213,7 @@ namespace Sevdah.Helpers
 
             if (_otpremnicaPodaci._kupac.NazivKupca == "---")
             {
-                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
                 _pdfPCell = new PdfPCell(new Phrase("", _fontStyle));
                 _pdfPCell.Colspan = _totalColumns;
                 _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -225,17 +224,16 @@ namespace Sevdah.Helpers
             }
             else
             {
-                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+                _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
                 _pdfPCell = new PdfPCell(new Phrase("PDV: " + this._otpremnicaPodaci._kupac.PDV_broj, _fontStyle));
                 _pdfPCell.Colspan = _totalColumns;
                 _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 _pdfPCell.Border = Rectangle.BOTTOM_BORDER;
                 _pdfPCell.BackgroundColor = BaseColor.WHITE;
                 _pdfPCell.ExtraParagraphSpace = 0;
+                _pdfPCell.PaddingBottom = 10f;
                 _pdfTable.AddCell(_pdfPCell);
             }
-
-
 
             _fontStyle = FontFactory.GetFont("Tahoma", 18f, 1);
             if (_otpremnicaPodaci._otpremnica.Revers == false)
@@ -255,12 +253,11 @@ namespace Sevdah.Helpers
             _pdfPCell.ExtraParagraphSpace = 0;
             _pdfTable.AddCell(_pdfPCell);
 
-
             _pdfTable.CompleteRow();
         }
         private void ReportBody()
         {
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 10f, 1);
 
             _pdfPCell = new PdfPCell(new Phrase("R.Br.", _fontStyle));
             _pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -283,7 +280,6 @@ namespace Sevdah.Helpers
             _pdfTable.CompleteRow();
 
             _fontStyle = FontFactory.GetFont("Tahoma", 11f, 0);
-            int serialNumber = 1;
             int brojac = 1;
             foreach (OtpremnicaProizvod stavka in _otpremnicaPodaci._listaStavki)
             {

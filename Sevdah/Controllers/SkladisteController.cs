@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sevdah.Data;
 using Sevdah.Helpers;
@@ -24,12 +23,11 @@ namespace Sevdah.Controllers
         public IActionResult Index()
         {
 
-        List<Skladiste> model = db.Skladiste.ToList();
+            List<Skladiste> model = db.Skladiste.ToList();
 
 
             return View(model);
         }
-
 
         public IActionResult Uredi(int skladisteID)
         {
@@ -38,18 +36,15 @@ namespace Sevdah.Controllers
             model.Skladiste = db.Skladiste.Where(x => x.SkladisteID == skladisteID).FirstOrDefault();
             model.Nova = 0;
 
-
             return View(model);
         }
 
         public IActionResult Snimi(SkladisteUrediVM model)
         {
             Skladiste skladiste = db.Skladiste.Where(x => x.SkladisteID == model.Skladiste.SkladisteID).FirstOrDefault();
-        
+
             float nova = model.Nova;
             skladiste.KolicinaUKg += nova;
-          
-
 
             db.Skladiste.Update(skladiste);
             db.SaveChanges();

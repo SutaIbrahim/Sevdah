@@ -49,7 +49,7 @@ namespace Sevdah.Helpers
             slika.ScaleAbsoluteWidth(51);
             _document.Add(slika);
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("Pržionica kafe", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -60,7 +60,7 @@ namespace Sevdah.Helpers
             _pdfTable.CompleteRow();
 
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("O.R \"Sevdah\"", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;

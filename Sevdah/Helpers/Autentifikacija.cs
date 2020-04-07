@@ -12,9 +12,8 @@ namespace Sevdah.Helpers
     {
         private const string LogiraniKorisnik = "logirani_korisnik";
 
-        public static void SetLogiraniKorisnik(this HttpContext context, KorisnickiNalog korisnik, bool snimiUCookie=false)
+        public static void SetLogiraniKorisnik(this HttpContext context, KorisnickiNalog korisnik, bool snimiUCookie = false)
         {
-
             DBContext db = context.RequestServices.GetService<DBContext>();
 
             string stariToken = context.Request.GetCookieJson<string>(LogiraniKorisnik);
@@ -30,7 +29,6 @@ namespace Sevdah.Helpers
 
             if (korisnik != null)
             {
-
                 string token = Guid.NewGuid().ToString();
                 db.AutorizacijskiToken.Add(new AutorizacijskiToken
                 {

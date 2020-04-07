@@ -7,9 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
     <script src='~/lib/jquery/dist/jquery.min.js'></script>
     <link href="~/css/loader.css" rel="stylesheet" />
     <link href='~/css/fullcalendar.min.css' rel='stylesheet' />
@@ -59,11 +56,16 @@
                 </div>
                 <div class="panel-body">
                     <img width="125" height="170" style="display: block;margin-left: auto;margin-right: auto;" src="~/images/SevdahLogo_Color_v1.png" /><br />
+
                     @if (poruka != null)
                     {
                         <p class="alert alert-danger">@poruka</p>
                     }
 
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
 
                     <form role="form" action="/Authentication/login">
                         <fieldset>
@@ -79,17 +81,14 @@
                                 </label>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block" value="Login">Login</button>
+
                             <br />
-                            <p style="text-align:center;"><b>Developed by:</b> Mirza Medar & Ibrahim Šuta </p>
-                            <p style="text-align:center;"><b>App version:</b> v03112018 </p>
+
+                            <p style="text-align:center;"><b>Developed by:</b> Ibrahim Šuta & Mirza Medar </p>
+                            <p style="text-align:center;"><b>App version:</b> v07.04.2020 </p>
 
                             <h3 style="color:red;"><b>Username:</b> sevdah</h3>
                             <h3 style="color:red;"><b>Password:</b> sevdah1998</h3>
-
-                            @if (!ViewData.ModelState.IsValid)
-                            {
-                                <div asp-validation-summary="All" class="alert alert-danger"></div>
-                            }
 
                         </fieldset>
                     </form>
@@ -102,9 +101,7 @@
     <br />
     <br />
 
-
     <!---->
-
 
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
