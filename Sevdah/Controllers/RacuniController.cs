@@ -67,7 +67,7 @@ namespace Sevdah.Controllers
                 }
 
                 Model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2030; i++)
+                for (int i = 2018; i < 2050; i++)
                 {
                     Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -116,7 +116,7 @@ namespace Sevdah.Controllers
             }).ToList();
 
             Model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2030; i++)
+            for (int i = 2018; i < 2050; i++)
             {
                 Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }
@@ -395,7 +395,7 @@ namespace Sevdah.Controllers
                 }).ToList();
 
                 Model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2030; i++)
+                for (int i = 2018; i < 2050; i++)
                 {
                     Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -433,7 +433,7 @@ namespace Sevdah.Controllers
                 Placeno = x.Placeno
             }).ToList();
             Model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2030; i++)
+            for (int i = 2018; i < 2050; i++)
             {
                 Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }

@@ -13330,23 +13330,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ibrahim\\.nuget\\packages\\": {},
+    "C:\\Users\\ibro\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
+      "projectUniqueName": "C:\\Users\\ibro\\source\\repos\\Sevdah\\Sevdah\\Sevdah.csproj",
       "projectName": "Sevdah",
-      "projectPath": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\Sevdah.csproj",
-      "packagesPath": "C:\\Users\\Ibrahim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ibrahim\\source\\repos\\Sevdah\\App\\Sevdah\\obj\\",
+      "projectPath": "C:\\Users\\ibro\\source\\repos\\Sevdah\\Sevdah\\Sevdah.csproj",
+      "packagesPath": "C:\\Users\\ibro\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ibro\\source\\repos\\Sevdah\\Sevdah\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ibrahim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ibro\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13358,6 +13358,7 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
+          "targetAlias": "netcoreapp2.0",
           "projectReferences": {}
         }
       },
@@ -13369,6 +13370,7 @@
     },
     "frameworks": {
       "netcoreapp2.0": {
+        "targetAlias": "netcoreapp2.0",
         "dependencies": {
           "AlertifyJS": {
             "target": "Package",
@@ -13398,10 +13400,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -13410,7 +13418,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'iTextSharp 5.5.13' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
+      "message": "Package 'iTextSharp 5.5.13' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.0'. This package may not be fully compatible with your project.",
       "libraryId": "iTextSharp",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.0"

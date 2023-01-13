@@ -41,7 +41,7 @@ namespace Sevdah.Controllers
                 }
 
                 model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2030; i++)
+                for (int i = 2018; i < 2050; i++)
                 {
                     model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -73,7 +73,7 @@ namespace Sevdah.Controllers
             model.Uplate = db.UplateDobavljacu.Include(x => x.Dobavljac).Where(x => x.Datum.Month == DateTime.Now.Month && x.Datum.Year == DateTime.Now.Year).ToList();
 
             model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2030; i++)
+            for (int i = 2018; i < 2050; i++)
             {
                 model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }
