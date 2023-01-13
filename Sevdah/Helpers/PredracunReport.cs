@@ -153,7 +153,7 @@ namespace Sevdah.Helpers
             // PODACI O KUPCU
 
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 14f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 1);
             _pdfPCell = new PdfPCell(new Phrase("KUPAC:", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -233,7 +233,7 @@ namespace Sevdah.Helpers
                 _pdfTable.AddCell(_pdfPCell);
             }
 
-            _fontStyle = FontFactory.GetFont("Arial", 18f, 1);
+            _fontStyle = FontFactory.GetFont("Arial", 17f, 1);
             _pdfPCell = new PdfPCell(new Phrase("PREDRACUN", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -260,7 +260,7 @@ namespace Sevdah.Helpers
 
         private void ReportBody()
         {
-            _fontStyle = FontFactory.GetFont("Tahoma", 10f, 1);
+            _fontStyle = FontFactory.GetFont("Tahoma", 9f, 1);
 
             _pdfPCell = new PdfPCell(new Phrase("R.Br.", _fontStyle));
             _pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -312,7 +312,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 0);
+            _fontStyle = FontFactory.GetFont("Tahoma", 10f, 0);
             int serialNumber = 1;
             int brojac = 1;
             foreach (RacunProizvod stavka in _racunPodaci.listaStavki)
@@ -382,7 +382,7 @@ namespace Sevdah.Helpers
                 _pdfTable.AddCell(_pdfPCell);
                 _pdfTable.CompleteRow();
             }
-            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 2);
+            _fontStyle = FontFactory.GetFont("Tahoma", 12f, 2);
             _pdfPCell = new PdfPCell(new Phrase("Ukupno: " + Math.Round(this._racunPodaci.racun.UkupnoBezPDV, 2).ToString() + " KM", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -393,7 +393,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 13f, 2);
+            _fontStyle = FontFactory.GetFont("Tahoma", 12f, 2);
             _pdfPCell = new PdfPCell(new Phrase("PDV " + (this._racunPodaci.racun.PDV * 100).ToString() + "%: " + Math.Round(this._racunPodaci.racun.UkupnoBezPDV * this._racunPodaci.racun.PDV, 2) + " KM", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -403,7 +403,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 15f, 5);
+            _fontStyle = FontFactory.GetFont("Tahoma", 14f, 5);
             _pdfPCell = new PdfPCell(new Phrase("Ukupno za naplatu: " + Math.Round((this._racunPodaci.racun.UkupnoBezPDV + (this._racunPodaci.racun.UkupnoBezPDV * (this._racunPodaci.racun.PDV))), 2).ToString() + " KM", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -413,7 +413,7 @@ namespace Sevdah.Helpers
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
 
-            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1, BaseColor.DARK_GRAY);
+            _fontStyle = FontFactory.GetFont("Tahoma", 10f, 1, BaseColor.DARK_GRAY);
             _pdfPCell = new PdfPCell(new Phrase("NAPOMENA: Akciza uracunata u cijenu ", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -458,7 +458,7 @@ namespace Sevdah.Helpers
 
             _pdfTable.CompleteRow();
 
-            _pdfPCell = new PdfPCell(new Phrase("                                                                                                                                       Direktor:\n\n\n                                                                                                                         ----------------------------------------", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase("                                                                                                                                         Direktor:\n\n\n                                                                                                                         ----------------------------------------", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
