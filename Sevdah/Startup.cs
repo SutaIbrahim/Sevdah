@@ -24,7 +24,7 @@ namespace Sevdah
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = _configuration.GetConnectionString("SevdahLocal_Development");
+            string connectionString = _configuration.GetConnectionString("SevdahLocal_IIS_Host");
             services.AddDbContext<DBContext>(options => options.UseSqlServer(connectionString));
 
             //tacka i zarez konfilt - https://dotnetcoretutorials.com/2017/06/22/request-culture-asp-net-core/
