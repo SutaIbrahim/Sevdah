@@ -38,7 +38,7 @@ namespace Sevdah.Controllers
                 if (podaci.srchTxt == null)
                 {
 
-                    Model.listaRacuna = _db.Racuni.Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
+                    Model.listaRacuna = _db.Racuni.AsNoTracking().Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Datum.Month == podaci.MjesecId && x.Datum.Year == podaci.GodinaId) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
                     {
                         RacunId = x.RacunID,
                         BrojRacuna = x.BrojRacuna,
@@ -53,7 +53,7 @@ namespace Sevdah.Controllers
                 {
                     podaci.srchTxt = podaci.srchTxt.ToLower();
 
-                    Model.listaRacuna = _db.Racuni.OrderBy(d => d.Datum).Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Kupac.NazivKupca.ToLower().Contains(podaci.srchTxt) || x.BrojRacuna.StartsWith(podaci.srchTxt)) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
+                    Model.listaRacuna = _db.Racuni.AsNoTracking().OrderBy(d => d.Datum).Include(x => x.Kupac).Where(x => (x.IsPredracun == false && x.Kupac.NazivKupca.ToLower().Contains(podaci.srchTxt) || x.BrojRacuna.StartsWith(podaci.srchTxt)) && x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
                     {
                         RacunId = x.RacunID,
                         BrojRacuna = x.BrojRacuna,
@@ -67,7 +67,7 @@ namespace Sevdah.Controllers
                 }
 
                 Model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2050; i++)
+                for (int i = 2018; i < 2100; i++)
                 {
                     Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -104,7 +104,7 @@ namespace Sevdah.Controllers
 
             Model = new RacuniIndexVM();
             Model.listaRacuna = new List<RacuniIndexVM.Row>();
-            Model.listaRacuna = _db.Racuni.Where(x => x.IsPredracun == false && (x.Datum.Month == DateTime.Now.Month) && (x.Datum.Year == DateTime.Now.Year) & x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
+            Model.listaRacuna = _db.Racuni.AsNoTracking().Where(x => x.IsPredracun == false && (x.Datum.Month == DateTime.Now.Month) && (x.Datum.Year == DateTime.Now.Year) & x.Kupac.NazivKupca != "---").Select(x => new RacuniIndexVM.Row
             {
                 RacunId = x.RacunID,
                 BrojRacuna = x.BrojRacuna,
@@ -116,7 +116,7 @@ namespace Sevdah.Controllers
             }).ToList();
 
             Model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2050; i++)
+            for (int i = 2018; i < 2100; i++)
             {
                 Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }
@@ -358,20 +358,29 @@ namespace Sevdah.Controllers
             byte[] docArray;
             RacuniReportVM Model = new RacuniReportVM();
             RacunReport report = new RacunReport();
-            Model.racun = _db.Racuni.Where(x => x.RacunID == RacunId).Include(x => x.Kupac).ThenInclude(x => x.Grad).FirstOrDefault();
+            Model.racun = _db.Racuni.AsNoTracking().Where(x => x.RacunID == RacunId).Include(x => x.Kupac).ThenInclude(x => x.Grad).FirstOrDefault();
             Model.listaStavki = new List<RacunProizvod>();
-            Model.listaStavki = _db.RacunProizvodi.Include(x => x.Proizvod).Include(x => x.Racun).Where(x => x.RacunID == RacunId).ToList();
+            Model.listaStavki = _db.RacunProizvodi.AsNoTracking().Include(x => x.Proizvod).Include(x => x.Racun).Where(x => x.RacunID == RacunId).ToList();
             docArray = report.PrepareReport(Model);
             return File(docArray, "application/pdf");
 
         }
         public IActionResult UnosFiskalnogRacuna(string RacunID, string brojFiskalnog)
         {
-            Racun r = _db.Racuni.Where(x => x.RacunID == int.Parse(RacunID)).FirstOrDefault();
+            Racun r = _db.Racuni.FirstOrDefault(x => x.RacunID == int.Parse(RacunID));
             r.BrojFiskalnogRacuna = brojFiskalnog;
             _db.SaveChanges();
             return RedirectToAction("Uredi", new { RacunId = int.Parse(RacunID) });
         }
+
+        public IActionResult UnosBrojaNarudzbe(string RacunID, string brojNarudzbe)
+        {
+            Racun r = _db.Racuni.FirstOrDefault(x => x.RacunID == int.Parse(RacunID));
+            r.BrojNarudzbe = brojNarudzbe;
+            _db.SaveChanges();
+            return RedirectToAction("Uredi", new { RacunId = int.Parse(RacunID) });
+        }
+
         #endregion
 
         #region GOTOVINA
@@ -395,7 +404,7 @@ namespace Sevdah.Controllers
                 }).ToList();
 
                 Model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2050; i++)
+                for (int i = 2018; i < 2100; i++)
                 {
                     Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -433,7 +442,7 @@ namespace Sevdah.Controllers
                 Placeno = x.Placeno
             }).ToList();
             Model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2050; i++)
+            for (int i = 2018; i < 2100; i++)
             {
                 Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }
@@ -556,8 +565,16 @@ namespace Sevdah.Controllers
         }
         public IActionResult UnosFiskalnogRacunaGotovina(string RacunID, string brojFiskalnog)
         {
-            Racun r = _db.Racuni.Where(x => x.RacunID == int.Parse(RacunID)).FirstOrDefault();
+            Racun r = _db.Racuni.FirstOrDefault(x => x.RacunID == int.Parse(RacunID));
             r.BrojFiskalnogRacuna = brojFiskalnog;
+            _db.SaveChanges();
+            return RedirectToAction("UrediGotovinski", new { RacunId = int.Parse(RacunID) });
+        }
+
+        public IActionResult UnosBrojaNarudzbeGotovina(string RacunID, string brojNarudzbe)
+        {
+            Racun r = _db.Racuni.FirstOrDefault(x => x.RacunID == int.Parse(RacunID));
+            r.BrojNarudzbe = brojNarudzbe;
             _db.SaveChanges();
             return RedirectToAction("UrediGotovinski", new { RacunId = int.Parse(RacunID) });
         }

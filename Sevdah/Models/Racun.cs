@@ -11,6 +11,7 @@ namespace Sevdah.Models
 
         public string BrojRacuna  { get; set; }
         public string BrojFiskalnogRacuna { get; set; }
+        public string BrojNarudzbe { get; set; }
 
         public DateTime Datum { get; set; }
 

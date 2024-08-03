@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Uredi";
     double ukupno = Math.Round(Model.racun.UkupnoBezPDV + (Model.racun.UkupnoBezPDV * 0.17), 2);
-    bool unosFiskalnog = false;
 }
 <section id="main-content">
     <section class="wrapper">
@@ -11,16 +10,16 @@
             <header class="panel-heading">
                 <h2><b>Detalji računa</b></h2>
                 <hr />
-
-
             </header>
+
             <br />
             <br />
+
             <div style="margin-left:5px;">
                 <h4><b>Broj računa:</b> @Model.racun.BrojRacuna</h4>
-                @if (Model.racun.BrojFiskalnogRacuna != "")
+                @if (Model.racun.BrojFiskalnogRacuna != string.Empty)
                 {
-                    <h4><b>Broj fiskalnog računa:</b> @Model.racun.BrojFiskalnogRacuna <button id="unos" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmjeni broj fiskalnog računa</button></h4>
+                    <h4><b>Broj fiskalnog računa:</b> @Model.racun.BrojFiskalnogRacuna <button id="unos" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmijeni broj fiskalnog računa</button></h4>
                 }
                 else
                 {
@@ -35,17 +34,29 @@
                     </form>
                 </div>
 
-
-
+                @if (Model.racun.BrojNarudzbe != string.Empty)
+                {
+                    <h4><b>Broj narudžbe:</b> @Model.racun.BrojNarudzbe <button id="unosBrojaNarudzbe" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmijeni broj narudžbe</button></h4>
+                }
+                else
+                {
+                    <h4><b>Broj narudžbe:</b><button id="unosBrojaNarudzbe" class="btn btn-primary" style="background-color:orangered;border-color:brown; font-size:12px;">Unesi broj narudžbe</button></h4>
+                }
+                <div id="unosBrojaNarudzbeDiv" hidden>
+                    <form action="/Racuni/UnosBrojaNarudzbe" style="width:40%;">
+                        <input asp-for="racun.RacunID" name="RacunID" hidden />
+                        <input asp-for="racun.BrojNarudzbe" name="brojNarudzbe" class="form-control" />
+                        <br />
+                        <button id="sacuvajBrojNarudzbe" type="submit" class="btn btn-success">Sačuvaj</button>
+                    </form>
+                </div>
 
                 <h4><b>Datum izdavanja:</b> @Model.racun.Datum.ToShortDateString()</h4>
                 <h4><b>Kupac:</b> @Model.racun.Kupac.NazivKupca</h4>
                 <h4><b>Ukupno za naplatu:</b> @ukupno</h4>
                 <h4><b>Dosad plaćeno:</b> @Math.Round(Model.racun.DosadPlaceno, 2)</h4>
                 <h4>
-                    <b>
-                        Plaćeno:
-                    </b>
+                    <b>Plaćeno:</b>
                     @if (Model.racun.Placeno == true)
                     {
                         <a style="color:green;"><b>DA</b></a>
@@ -53,7 +64,6 @@
                     else
                     {
                         <a style="color:red;"><b>NE</b></a>
-
                     }
                 </h4>
             </div>
@@ -74,9 +84,6 @@
                     }
 
                     <a class="btn btn-primary" href="/Racuni/IndexVirman" style="background-color:orangered;border-style:none;"><i class="fa fa-close"></i> Nazad</a>
-
-
-
                 </div>
                 <br />
                 <br />
@@ -116,7 +123,6 @@
                         }
                     </tbody>
                 </table>
-
             </div>
         </section>
     </section>
@@ -140,4 +146,20 @@
         alertify.success('Sacuvano!');
     })
 
+    var _unosBrojaNarudzbe = false;
+    $("#unosBrojaNarudzbe").click(function () {
+        if (_unosBrojaNarudzbe == false) {
+            $("#unosBrojaNarudzbeDiv").removeAttr('hidden');
+            _unosBrojaNarudzbe = !_unosBrojaNarudzbe;
+        }
+        else {
+            $("#unosBrojaNarudzbeDiv").attr('hidden', 1);
+            _unosBrojaNarudzbe = !_unosBrojaNarudzbe
+        }
+    });
+
+    $("#sacuvajBrojNarudzbe").click(function () {
+        alertify.set('notifier', 'position', 'top-left');
+        alertify.success('Sacuvano!');
+    });
 </script>

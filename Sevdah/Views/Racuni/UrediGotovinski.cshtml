@@ -17,9 +17,9 @@
             <br />
             <br />
             <div style="margin-left:5px;">
-                @if (Model.racun.BrojFiskalnogRacuna != "")
+                @if (Model.racun.BrojFiskalnogRacuna !=  string.Empty)
                 {
-                    <h4><b>Broj fiskalnog računa:</b> @Model.racun.BrojFiskalnogRacuna <button id="unos" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmjeni broj fiskalnog računa</button></h4>
+                    <h4><b>Broj fiskalnog računa:</b> @Model.racun.BrojFiskalnogRacuna <button id="unos" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmijeni broj fiskalnog računa</button></h4>
                 }
                 else
                 {
@@ -34,6 +34,22 @@
                     </form>
                 </div>
 
+                @if (Model.racun.BrojNarudzbe != string.Empty)
+                {
+                    <h4><b>Broj narudžbe:</b> @Model.racun.BrojNarudzbe <button id="unosBrojaNarudzbe" class="btn btn-default" style="background-color:whitesmoke;border-color:brown; font-size:12px;">Izmijeni broj narudžbe</button></h4>
+                }
+                else
+                {
+                    <h4><b>Broj narudžbe:</b><button id="unosBrojaNarudzbe" class="btn btn-primary" style="background-color:orangered;border-color:brown; font-size:12px;">Unesi broj narudžbe</button></h4>
+                }
+                <div id="unosBrojaNarudzbeDiv" hidden>
+                    <form action="/Racuni/UnosBrojaNarudzbeGotovina" style="width:40%;">
+                        <input asp-for="racun.RacunID" name="RacunID" hidden />
+                        <input asp-for="racun.BrojNarudzbe" name="brojNarudzbe" class="form-control" />
+                        <br />
+                        <button id="sacuvajBrojNarudzbe" type="submit" class="btn btn-success">Sačuvaj</button>
+                    </form>
+                </div>
 
 
 
@@ -119,16 +135,28 @@
         else {
             $("#unosFiskalnog").attr('hidden', 1);
             _unosFiskalnog = !_unosFiskalnog
-
         }
-
-
     });
 
     $("#sacuvaj").click(function () {
         alertify.set('notifier', 'position', 'top-left');
         alertify.success('Sacuvano!');
+    });
 
-    })
+    var _unosBrojaNarudzbe = false;
+    $("#unosBrojaNarudzbe").click(function () {
+        if (_unosBrojaNarudzbe == false) {
+            $("#unosBrojaNarudzbeDiv").removeAttr('hidden');
+            _unosBrojaNarudzbe = !_unosBrojaNarudzbe;
+        }
+        else {
+            $("#unosBrojaNarudzbeDiv").attr('hidden', 1);
+            _unosBrojaNarudzbe = !_unosBrojaNarudzbe
+        }
+    });
 
+    $("#sacuvajBrojNarudzbe").click(function () {
+        alertify.set('notifier', 'position', 'top-left');
+        alertify.success('Sacuvano!');
+    });
 </script>

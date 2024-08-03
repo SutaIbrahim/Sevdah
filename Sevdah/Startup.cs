@@ -25,6 +25,7 @@ namespace Sevdah
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = _configuration.GetConnectionString("SevdahLocal_IIS_Host");
+            //string connectionString = _configuration.GetConnectionString("SevdahLocal_Development");
             services.AddDbContext<DBContext>(options => options.UseSqlServer(connectionString));
 
             //tacka i zarez konfilt - https://dotnetcoretutorials.com/2017/06/22/request-culture-asp-net-core/

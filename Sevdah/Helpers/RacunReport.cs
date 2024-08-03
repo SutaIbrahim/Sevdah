@@ -264,6 +264,16 @@ namespace Sevdah.Helpers
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
             _pdfPCell.PaddingTop = 2f;
+            _pdfPCell.BackgroundColor = BaseColor.WHITE;
+            _pdfPCell.ExtraParagraphSpace = 0;
+            _pdfTable.AddCell(_pdfPCell);
+
+            _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
+            _pdfPCell = new PdfPCell(new Phrase("Broj narudžbe: " + this._racunPodaci.racun.BrojNarudzbe, _fontStyle));
+            _pdfPCell.Colspan = _totalColumns;
+            _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            _pdfPCell.Border = 0;
+            _pdfPCell.PaddingTop = 2f;
             _pdfPCell.PaddingBottom = 15f;
             _pdfPCell.BackgroundColor = BaseColor.WHITE;
             _pdfPCell.ExtraParagraphSpace = 0;

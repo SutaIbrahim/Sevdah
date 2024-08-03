@@ -58,7 +58,7 @@ namespace Sevdah.Controllers
                 }
 
                 Model.listaGodina = new List<SelectListItem>();
-                for (int i = 2018; i < 2050; i++)
+                for (int i = 2018; i < 2100; i++)
                 {
                     Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
                 }
@@ -107,7 +107,7 @@ namespace Sevdah.Controllers
             }).ToList();
 
             Model.listaGodina = new List<SelectListItem>();
-            for (int i = 2018; i < 2050; i++)
+            for (int i = 2018; i < 2100; i++)
             {
                 Model.listaGodina.Add(new SelectListItem { Value = i.ToString(), Text = i.ToString() });
             }

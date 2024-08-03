@@ -119,7 +119,8 @@ namespace Sevdah.Migrations
                     b.Property<string>("PDV_broj")
                         .IsRequired();
 
-                    b.Property<int?>("VirmanDani");
+                    b.Property<int?>("VirmanDani")
+                        .IsRequired();
 
                     b.HasKey("KupacID");
 
@@ -234,6 +235,8 @@ namespace Sevdah.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BrojFiskalnogRacuna");
+
+                    b.Property<string>("BrojNarudzbe");
 
                     b.Property<string>("BrojRacuna");
 
