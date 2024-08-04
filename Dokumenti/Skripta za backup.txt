@@ -1,0 +1,11 @@
+USE Sevdah
+go
+declare @datum nvarchar(MAX)
+set @datum = CONVERT(nvarchar(MAX), getdate(),104)
+
+declare @putanja nvarchar(max)
+set @putanja = ('D:\BackUp baze\sevdah_'+ @datum + '.bak')
+
+backup database Sevdah
+to disk = N@putanja
+with INIT;
