@@ -71,7 +71,7 @@ namespace Sevdah.Helpers
             _pdfTable.CompleteRow();
 
             _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
-            _pdfPCell = new PdfPCell(new Phrase("BISCE POLJE b.b", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase("Južni Logor (Dolina Sunca) bb", _fontStyle));
             _pdfPCell.Colspan = _totalColumns;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
