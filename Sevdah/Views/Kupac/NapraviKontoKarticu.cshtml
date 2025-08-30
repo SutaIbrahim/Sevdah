@@ -21,10 +21,10 @@
                     <br />
 
 
-                    @if (Model.KupacID == 23 || Model.KupacID == 20) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 2 binga ( sjever i jug )
+                @if (Model.NazivKupca.ToLower().Contains("bingo")) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 3 binga ( sjever, jug, zalik) - temp rjesenje
                     {
                     <p style="color:red;">Pocetno stanje dugovanja u bazi je 25.7.2018, te kako bi dobili ispravne rezultate za najraniji datumOD izaberite 25.7.2018</p>
-                    <b style="color:red;">Izabrali ste BINGO, u obzir ce biti uzeti Bingo u Vrapcicima i na Biscu </b>
+                    <b style="color:red;">Izabrali ste BINGO, u obzir ce biti uzeti svi Bingo objekti</b>
                 }
                 else
                 {
@@ -42,6 +42,8 @@
                         <input type="text" asp-for="datumOdString" class="form-control date-picker" />
                         <br />
                         @Html.HiddenFor(model => model.KupacID)
+                        @Html.HiddenFor(model => model.NazivKupca)
+
                         <label asp-for="datumDo">Do:</label>
                         <input type="text" asp-for="datumDoString" class="form-control date-picker" />
                         <br />

@@ -209,8 +209,9 @@ namespace Sevdah.Controllers
             Model.datumOdString = DateTime.Now.AddDays(-31).ToShortDateString();
             Model.datumDoString = DateTime.Now.ToShortDateString();
             Model.KupacID = KupacID;
+            Model.NazivKupca = db.Kupci.AsNoTracking().FirstOrDefault(x => x.KupacID == KupacID).NazivKupca;
 
-            Model.Grad = db.Kupci.Where(x => x.KupacID == KupacID).Include(p => p.Grad).FirstOrDefault().Grad.Naziv;
+            Model.Grad = db.Kupci.Where(x => x.KupacID == KupacID).Include(p => p.Grad).AsNoTracking().FirstOrDefault().Grad.Naziv;
             return View(Model);
         }
         public IActionResult PrikaziKontoKarticu(KupacNapraviKontoKarticuVM model)
@@ -226,12 +227,14 @@ namespace Sevdah.Controllers
             double uplataPRE = 0;
             DateTime pocetnoStanjeAplikacije = new DateTime(2018, 7, 25); // na taj dan uneseni svi dugovi
 
-            if (model.KupacID == 20 || model.KupacID == 23) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 2 binga ( sjever i jug )
+
+            var bingoIds = db.Kupci.Where(x => x.NazivKupca.ToLower().Contains("bingo")).AsNoTracking().Select(x => x.KupacID).ToArray();
+            if (bingoIds.Contains(model.KupacID)) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 3 binga ( sjever, jug, zalik) - temp rjesenje
             {
                 //PRETHODNO DUGOVANJE
-                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
+                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && bingoIds.Contains(x.KupacID)).AsNoTracking().ToList();
 
-                listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
+                listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && bingoIds.Contains(x.KupacID)).AsNoTracking().ToList();
 
                 for (int i = 0; i < listaRacunaDbPRE.Count(); i++)
                 {
@@ -243,16 +246,16 @@ namespace Sevdah.Controllers
                 }
                 //
 
-                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
+                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && bingoIds.Contains(x.KupacID)).AsNoTracking().ToList();
 
-                listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && (x.KupacID == 20 || x.KupacID == 23)).ToList();
+                listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && bingoIds.Contains(x.KupacID)).AsNoTracking().ToList();
             }
             else
             {
                 //PRETHODNO DUGOVANJE
-                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).ToList();
+                listaRacunaDbPRE = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).AsNoTracking().ToList();
 
-                listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).ToList();
+                listaUplataDbPRE = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= pocetnoStanjeAplikacije && x.Datum < model.datumOd) && x.KupacID == model.KupacID).AsNoTracking().ToList();
 
                 for (int i = 0; i < listaRacunaDbPRE.Count(); i++)
                 {
@@ -264,9 +267,9 @@ namespace Sevdah.Controllers
                 }
                 //
 
-                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).ToList();
+                listaRacunaDb = db.Racuni.Include(x => x.Kupac).Where(x => !x.IsPredracun && (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).AsNoTracking().ToList();
 
-                listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).ToList();
+                listaUplataDb = db.Uplate.Include(x => x.Kupac).Where(x => (x.Datum >= model.datumOd && x.Datum <= model.datumDo.AddHours(8)) && x.KupacID == model.KupacID).AsNoTracking().ToList();
             }
 
             KupacKontoKartica Model = new KupacKontoKartica();

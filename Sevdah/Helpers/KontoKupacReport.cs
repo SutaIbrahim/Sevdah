@@ -164,7 +164,7 @@ namespace Sevdah.Helpers
             _pdfTable.CompleteRow();
 
 
-            if (_redovi.KupacId == 20 || _redovi.KupacId == 23) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 2 binga ( sjever i jug )
+            if (_redovi.NazivKupca.ToLower().Contains("bingo")) // u slucaju da se izdaje konto kartica za Bingo jer u bazi imaju 3 binga ( sjever, jug, zalik) - temp rjesenje
             {
                 _fontStyle = FontFactory.GetFont("Tahoma", 11f, 1);
                 _pdfPCell = new PdfPCell(new Phrase("Bingo d.o.o. Tuzla", _fontStyle));

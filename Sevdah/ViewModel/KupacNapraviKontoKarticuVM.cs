@@ -9,6 +9,7 @@ namespace Sevdah.ViewModel
         public string datumOdString { get; set; }
         public string datumDoString { get; set; }
         public int KupacID { get; set; }
+        public string NazivKupca { get; set; }
         public string Grad { get; set; }
 
         public DateTime datumOd => Convert.ToDateTime(datumOdString);
